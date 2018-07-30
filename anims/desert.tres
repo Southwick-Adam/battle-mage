@@ -1,0 +1,139 @@
+[gd_resource type="Animation" format=1]
+
+[resource]
+
+resource/name = "play"
+length = 3.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:transform/scale")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 0.2, 0.5, 1, 2.5, 3 ),
+"transitions": FloatArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1e-05, 1e-05 ), Vector2( 0.25, 0.25 ), Vector2( 0.25, 0.25 ), Vector2( 0.7, 0.7 ), Vector2( 0.7, 0.7 ), Vector2( 1e-05, 1e-05 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Position2D10:transform/pos")
+tracks/1/interp = 1
+tracks/1/imported = false
+tracks/1/keys = {
+"times": FloatArray( 0, 0.5, 1, 2.5, 3 ),
+"transitions": FloatArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -17.1883, 35.6045 ), Vector2( -17.1883, 35.6045 ), Vector2( -56.476, 110.497 ), Vector2( -56.476, 110.497 ), Vector2( -9.82184, 24.5548 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Position2D12:transform/pos")
+tracks/2/interp = 1
+tracks/2/imported = false
+tracks/2/keys = {
+"times": FloatArray( 0, 0.5, 1, 2.5, 3 ),
+"transitions": FloatArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 15.9607, 38.06 ), Vector2( 15.9607, 38.06 ), Vector2( 69.9812, 114.18 ), Vector2( 69.9812, 114.18 ), Vector2( 9.82196, 24.5548 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Position2D4:transform/pos")
+tracks/3/interp = 1
+tracks/3/imported = false
+tracks/3/keys = {
+"times": FloatArray( 0, 0.5, 1, 2.5, 3 ),
+"transitions": FloatArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -22.0993, -30.6935 ), Vector2( -22.0993, -30.6935 ), Vector2( -73.6644, -98.2192 ), Vector2( -73.6644, -98.2192 ), Vector2( -14.7329, -11.0497 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Position2D11:transform/pos")
+tracks/4/interp = 1
+tracks/4/imported = false
+tracks/4/keys = {
+"times": FloatArray( 0, 0.5, 1, 2.5, 3 ),
+"transitions": FloatArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1.22778, 38.06 ), Vector2( 1.22778, 38.06 ), Vector2( -1.22766, 125.229 ), Vector2( -1.22766, 125.229 ), Vector2( 1.22778, 24.5548 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Position2D2:transform/pos")
+tracks/5/interp = 1
+tracks/5/imported = false
+tracks/5/keys = {
+"times": FloatArray( 0, 0.5, 1, 2.5, 3 ),
+"transitions": FloatArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 20.8716, -29.4657 ), Vector2( 20.8716, -29.4657 ), Vector2( 76.1199, -93.3082 ), Vector2( 76.1199, -93.3082 ), Vector2( 14.7329, -12.2774 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Position2D7:transform/pos")
+tracks/6/interp = 1
+tracks/6/imported = false
+tracks/6/keys = {
+"times": FloatArray( 0, 0.5, 1, 2.5, 3 ),
+"transitions": FloatArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 39.2877, 3.68323 ), Vector2( 39.2877, 3.68323 ), Vector2( 124.002, 11.0497 ), Vector2( 124.002, 11.0497 ), Vector2( 20.8716, 12.2774 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Position2D5:transform/pos")
+tracks/7/interp = 1
+tracks/7/imported = false
+tracks/7/keys = {
+"times": FloatArray( 0, 0.5, 1, 2.5, 3 ),
+"transitions": FloatArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -34.3766, -14.7329 ), Vector2( -34.3766, -14.7329 ), Vector2( -106.813, -46.6541 ), Vector2( -106.813, -46.6541 ), Vector2( -22.0992, -1.22774 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Position2D3:transform/pos")
+tracks/8/interp = 1
+tracks/8/imported = false
+tracks/8/keys = {
+"times": FloatArray( 0, 0.5, 1, 2.5, 3 ),
+"transitions": FloatArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 34.3767, -15.9606 ), Vector2( 34.3767, -15.9606 ), Vector2( 120.318, -44.1986 ), Vector2( 120.318, -44.1986 ), Vector2( 24.5547, 7.62939e-06 ) ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Position2D1:transform/pos")
+tracks/9/interp = 1
+tracks/9/imported = false
+tracks/9/keys = {
+"times": FloatArray( 0, 0.5, 1, 2.5, 3 ),
+"transitions": FloatArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -31.9212 ), Vector2( 0, -31.9212 ), Vector2( 0, -110.497 ), Vector2( 0, -110.497 ), Vector2( 0, -18.4161 ) ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Position2D6:transform/pos")
+tracks/10/interp = 1
+tracks/10/imported = false
+tracks/10/keys = {
+"times": FloatArray( 0, 0.5, 1, 2.5, 3 ),
+"transitions": FloatArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -38.0599, 3.68323 ), Vector2( -38.0599, 3.68323 ), Vector2( -125.229, 6.1387 ), Vector2( -125.229, 6.1387 ), Vector2( -18.4161, 15.9606 ) ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Position2D8:transform/pos")
+tracks/11/interp = 1
+tracks/11/imported = false
+tracks/11/keys = {
+"times": FloatArray( 0, 0.5, 1, 2.5, 3 ),
+"transitions": FloatArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 34.3768, 25.7825 ), Vector2( 34.3768, 25.7825 ), Vector2( 109.269, 65.0702 ), Vector2( 109.269, 65.0702 ), Vector2( 15.9607, 20.8716 ) ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Position2D9:transform/pos")
+tracks/12/interp = 1
+tracks/12/imported = false
+tracks/12/keys = {
+"times": FloatArray( 0, 0.5, 1, 2.5, 3 ),
+"transitions": FloatArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -33.149, 22.0993 ), Vector2( -33.149, 22.0993 ), Vector2( -104.358, 61.387 ), Vector2( -104.358, 61.387 ), Vector2( -14.7328, 22.0993 ) ]
+}
+

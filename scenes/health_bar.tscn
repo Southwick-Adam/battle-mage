@@ -1,0 +1,54 @@
+[gd_scene load_steps=4 format=1]
+
+[ext_resource path="res://scripts/health_bar.gd" type="Script" id=1]
+[ext_resource path="res://assets/pixle.png" type="Texture" id=2]
+[ext_resource path="res://assets/health.png" type="Texture" id=3]
+
+[node name="health_bar" type="Control"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 140.0
+margin/top = 50.0
+margin/right = 40.0
+margin/bottom = 40.0
+script/script = ExtResource( 1 )
+
+[node name="background" type="TextureFrame" parent="."]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = -68.0
+margin/top = -6.0
+margin/right = 68.0
+margin/bottom = 7.0
+texture = ExtResource( 2 )
+modulate = Color( 0.207687, 0.135971, 0.261719, 1 )
+expand = true
+stretch_mode = 0
+
+[node name="health" type="TextureFrame" parent="."]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = -69.0
+margin/top = -8.0
+margin/right = 68.0
+margin/bottom = 7.0
+texture = ExtResource( 2 )
+modulate = Color( 0.445313, 0.0574036, 0.0574036, 1 )
+expand = true
+stretch_mode = 0
+
+[node name="Sprite" type="Sprite" parent="."]
+
+transform/pos = Vector2( 0, 0.487679 )
+texture = ExtResource( 3 )
+
+
