@@ -17,8 +17,7 @@ func _freeze(target):
 	if not marked.has(target):
 		var scene = load("res://scenes/ice block.tscn")
 		var ice = scene.instance()
-		get_node("/root/world").add_child(ice)
-		ice.set_global_pos(target.get_global_pos())
+		target.add_child(ice)
 		marked.insert(0,target)
 
 func _on_Area2D_body_enter( body ):
@@ -47,8 +46,8 @@ func _fixed_process(delta):
 		get_parent().queue_free()
 
 func _ready():
-	set_global_pos(get_node("/root/world/player/KinematicBody2D").get_global_pos())
-	var angle = get_node("/root/world/player/KinematicBody2D").get_rot()
+	set_global_pos(get_node("/root/world/player/KinematicBody2D/anchor/Position2D").get_global_pos())
+	var angle = get_node("/root/world/player/KinematicBody2D/anchor").get_rot()
 	velocity.x = cos(angle) * SPEED
 	velocity.y = -sin(angle) * SPEED
 	set_fixed_process(true)

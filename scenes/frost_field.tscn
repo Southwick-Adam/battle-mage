@@ -56,7 +56,7 @@ tracks/3/keys = {
 "values": [ 1 ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=3]
 
 resource/name = "start"
 length = 3.0
@@ -144,7 +144,7 @@ playback/process_mode = 1
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
 anims/idle = SubResource( 2 )
-anims/start = SubResource( 5 )
+anims/start = SubResource( 3 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]

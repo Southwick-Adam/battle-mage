@@ -9,7 +9,7 @@
 custom_solver_bias = 0.0
 points = Vector2Array( -4.54298, -7.72118, -0.24115, -7.72118, 4.41917, 6.61828, -5.25996, 6.97676 )
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 
 resource/name = "explode"
 length = 0.2
@@ -98,9 +98,8 @@ tracks/7/keys = {
 "values": [ 2 ]
 }
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=3]
 
-resource/name = "idle"
 length = 0.01
 loop = true
 step = 0.1
@@ -204,8 +203,8 @@ trigger = false
 playback/process_mode = 1
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
-anims/explode = SubResource( 3 )
-anims/idle = SubResource( 2 )
+anims/explode = SubResource( 2 )
+anims/idle = SubResource( 3 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]

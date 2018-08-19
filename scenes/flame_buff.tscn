@@ -7,10 +7,11 @@
 [node name="burn" type="Particles2D" parent="."]
 
 visibility/blend_mode = 1
+z/z = 3
 config/amount = 15
 config/lifetime = 0.2
 config/process_mode = 1
-config/half_extents = Vector2( 15, 15 )
+config/half_extents = Vector2( 16, 16 )
 config/local_space = false
 config/texture = ExtResource( 1 )
 params/direction = 180.0

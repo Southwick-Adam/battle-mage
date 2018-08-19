@@ -27,7 +27,7 @@ margin/top = -6.0
 margin/right = 68.0
 margin/bottom = 7.0
 texture = ExtResource( 2 )
-modulate = Color( 0.207687, 0.135971, 0.261719, 1 )
+modulate = Color( 0.14902, 0.0862745, 0.196078, 1 )
 expand = true
 stretch_mode = 0
 

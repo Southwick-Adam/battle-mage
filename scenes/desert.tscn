@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=1]
 
-[ext_resource path="res://scripts/test.gd" type="Script" id=1]
+[ext_resource path="res://scripts/desert.gd" type="Script" id=1]
 [ext_resource path="res://assets/sand.png" type="Texture" id=2]
 [ext_resource path="res://anims/desert.tres" type="Animation" id=3]
 
@@ -8,7 +8,7 @@
 
 script/script = ExtResource( 1 )
 
-[node name="Position2D" type="Position2D" parent="."]
+[node name="center" type="Position2D" parent="."]
 
 [node name="Sprite" type="Sprite" parent="."]
 

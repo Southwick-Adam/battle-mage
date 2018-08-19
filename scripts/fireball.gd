@@ -13,7 +13,7 @@ func _animate(anim):
 
 func _on_Area2D_body_enter( body ):
 	velocity = Vector2(0,0)
-	#body._take_damage(5)
+	body._take_damage(10)
 	_animate("boom")
 	timer = 10
 	var rng = randf()
@@ -34,8 +34,8 @@ func _fixed_process(delta):
 	motion = move(motion)
 
 func _ready():
-	set_global_pos(get_node("/root/world/player/KinematicBody2D").get_global_pos())
-	var angle = get_node("/root/world/player/KinematicBody2D").get_rot()
+	set_global_pos(get_node("/root/world/player/KinematicBody2D/anchor/Position2D").get_global_pos())
+	var angle = get_node("/root/world/player/KinematicBody2D/anchor").get_rot()
 	velocity.x = cos(angle) * SPEED
 	velocity.y = -sin(angle) * SPEED
 	set_fixed_process(true)

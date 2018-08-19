@@ -16,8 +16,4 @@ transform/pos = Vector2( 267.793, 524.428 )
 
 transform/pos = Vector2( 92.0538, 301.267 )
 
-[node name="Kthing1" parent="." instance=ExtResource( 3 )]
-
-transform/pos = Vector2( 44.6321, 390.531 )
-
 

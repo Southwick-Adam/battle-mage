@@ -1,61 +1,15 @@
-[gd_scene load_steps=14 format=1]
+[gd_scene load_steps=5 format=1]
 
 [ext_resource path="res://scripts/flame_wheel.gd" type="Script" id=1]
 [ext_resource path="res://assets/Fire Particle.png" type="Texture" id=2]
 
-[sub_resource type="ConvexPolygonShape2D" id=1]
+[sub_resource type="CircleShape2D" id=13]
 
 custom_solver_bias = 0.0
-points = Vector2Array( -8.35934, -93.8686, 2.41794, -108.837, 24.5712, -78.5387, 3.01668, -74.709 )
+radius = 93.5309
 
-[sub_resource type="ConvexPolygonShape2D" id=2]
+[sub_resource type="Animation" id=12]
 
-custom_solver_bias = 0.0
-points = Vector2Array( -5.36566, -17.2302, 3.01668, -74.709, 24.5712, -78.5387, 16.1889, -15.6712, 3.01668, 16.3216 )
-
-[sub_resource type="ConvexPolygonShape2D" id=3]
-
-custom_solver_bias = 0.0
-points = Vector2Array( 68.8778, -5.83174, 90.4324, -16.609, 109.592, -5.83174, 98.8147, 10.9329, 82.0501, 23.5064, 54.5081, 26.5001 )
-
-[sub_resource type="ConvexPolygonShape2D" id=4]
-
-custom_solver_bias = 0.0
-points = Vector2Array( 45.5271, -4.63426, 68.8778, -5.83174, 54.5081, 26.5001, 23.3738, 17.519 )
-
-[sub_resource type="ConvexPolygonShape2D" id=5]
-
-custom_solver_bias = 0.0
-points = Vector2Array( 25.17, -13.0166, 45.5271, -4.63426, 23.3738, 17.519, 3.01668, 16.3216, 16.1889, -15.6712 )
-
-[sub_resource type="ConvexPolygonShape2D" id=6]
-
-custom_solver_bias = 0.0
-points = Vector2Array( -77.2142, 0.731949, -95.7751, 6.71933, -104.157, -8.24911, -68.8319, -32.1986, -67.6344, -7.65038 )
-
-[sub_resource type="ConvexPolygonShape2D" id=7]
-
-custom_solver_bias = 0.0
-points = Vector2Array( -67.6344, -7.65038, -68.8319, -32.1986, -5.36566, -17.2302, -38.895, -2.86047 )
-
-[sub_resource type="ConvexPolygonShape2D" id=8]
-
-custom_solver_bias = 0.0
-points = Vector2Array( -17.3404, 4.32439, -38.895, -2.86047, -5.36566, -17.2302 )
-
-[sub_resource type="ConvexPolygonShape2D" id=9]
-
-custom_solver_bias = 0.0
-points = Vector2Array( -24.5253, 56.437, -17.3404, 4.32439, -5.36566, -17.2302, 3.01668, 16.3216, -1.17448, 62.4244, -22.1303, 85.7752 )
-
-[sub_resource type="ConvexPolygonShape2D" id=10]
-
-custom_solver_bias = 0.0
-points = Vector2Array( -8.95808, 100.145, -22.1303, 85.7752, -1.17448, 62.4244, 12.5965, 86.3739, 1.22046, 103.139 )
-
-[sub_resource type="Animation" id=11]
-
-resource/name = "play"
 length = 2.0
 loop = false
 step = 0.1
@@ -84,39 +38,11 @@ tracks/1/keys = {
 
 [node name="Area2D" type="Area2D" parent="."]
 
-transform/rot = -128.999
-transform/scale = Vector2( 1e-05, 1e-05 )
+transform/rot = 27777.8
 input/pickable = true
-shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/shape = SubResource( 13 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 3.0531, -1.92634 )
 shapes/0/trigger = false
-shapes/1/shape = SubResource( 2 )
-shapes/1/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
-shapes/1/trigger = false
-shapes/2/shape = SubResource( 3 )
-shapes/2/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
-shapes/2/trigger = false
-shapes/3/shape = SubResource( 4 )
-shapes/3/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
-shapes/3/trigger = false
-shapes/4/shape = SubResource( 5 )
-shapes/4/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
-shapes/4/trigger = false
-shapes/5/shape = SubResource( 6 )
-shapes/5/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
-shapes/5/trigger = false
-shapes/6/shape = SubResource( 7 )
-shapes/6/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
-shapes/6/trigger = false
-shapes/7/shape = SubResource( 8 )
-shapes/7/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
-shapes/7/trigger = false
-shapes/8/shape = SubResource( 9 )
-shapes/8/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
-shapes/8/trigger = false
-shapes/9/shape = SubResource( 10 )
-shapes/9/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
-shapes/9/trigger = false
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
@@ -158,7 +84,7 @@ color/color = Color( 0.742188, 0.401535, 0.197144, 1 )
 [node name="Particles2D1" type="Particles2D" parent="Area2D/Position2D"]
 
 visibility/blend_mode = 1
-transform/pos = Vector2( 6.53241, -21.942 )
+transform/pos = Vector2( 0, -22 )
 config/amount = 32
 config/lifetime = 0.3
 config/process_mode = 1
@@ -187,7 +113,7 @@ color/color = Color( 0.742188, 0.401535, 0.197144, 1 )
 [node name="Particles2D2" type="Particles2D" parent="Area2D/Position2D"]
 
 visibility/blend_mode = 1
-transform/pos = Vector2( 13.4093, -45.421 )
+transform/pos = Vector2( 0, -44 )
 config/amount = 32
 config/lifetime = 0.3
 config/process_mode = 1
@@ -216,7 +142,7 @@ color/color = Color( 0.742188, 0.401535, 0.197144, 1 )
 [node name="Particles2D3" type="Particles2D" parent="Area2D/Position2D"]
 
 visibility/blend_mode = 1
-transform/pos = Vector2( 14.3105, -71.0466 )
+transform/pos = Vector2( 0, -66 )
 config/amount = 32
 config/lifetime = 0.3
 config/process_mode = 1
@@ -245,7 +171,7 @@ color/color = Color( 0.742188, 0.401535, 0.197144, 1 )
 [node name="Particles2D4" type="Particles2D" parent="Area2D/Position2D"]
 
 visibility/blend_mode = 1
-transform/pos = Vector2( 5.45959, -89.1727 )
+transform/pos = Vector2( 0, -88 )
 config/amount = 32
 config/lifetime = 0.3
 config/process_mode = 1
@@ -274,7 +200,7 @@ color/color = Color( 0.742188, 0.401535, 0.197144, 1 )
 [node name="Position2D1" type="Position2D" parent="Area2D"]
 
 editor/display_folded = true
-transform/rot = 92.3239
+transform/rot = 90.0
 
 [node name="Particles2D" type="Particles2D" parent="Area2D/Position2D1"]
 
@@ -307,7 +233,7 @@ color/color = Color( 0.742188, 0.401535, 0.197144, 1 )
 [node name="Particles2D1" type="Particles2D" parent="Area2D/Position2D1"]
 
 visibility/blend_mode = 1
-transform/pos = Vector2( 6.53241, -21.942 )
+transform/pos = Vector2( 0, -22 )
 config/amount = 32
 config/lifetime = 0.3
 config/process_mode = 1
@@ -336,7 +262,7 @@ color/color = Color( 0.742188, 0.401535, 0.197144, 1 )
 [node name="Particles2D2" type="Particles2D" parent="Area2D/Position2D1"]
 
 visibility/blend_mode = 1
-transform/pos = Vector2( 13.4093, -45.421 )
+transform/pos = Vector2( 0, -44 )
 config/amount = 32
 config/lifetime = 0.3
 config/process_mode = 1
@@ -365,7 +291,7 @@ color/color = Color( 0.742188, 0.401535, 0.197144, 1 )
 [node name="Particles2D3" type="Particles2D" parent="Area2D/Position2D1"]
 
 visibility/blend_mode = 1
-transform/pos = Vector2( 14.3105, -71.0466 )
+transform/pos = Vector2( 0, -66 )
 config/amount = 32
 config/lifetime = 0.3
 config/process_mode = 1
@@ -394,7 +320,7 @@ color/color = Color( 0.742188, 0.401535, 0.197144, 1 )
 [node name="Particles2D4" type="Particles2D" parent="Area2D/Position2D1"]
 
 visibility/blend_mode = 1
-transform/pos = Vector2( 5.45959, -89.1727 )
+transform/pos = Vector2( 0, -88 )
 config/amount = 32
 config/lifetime = 0.3
 config/process_mode = 1
@@ -423,7 +349,7 @@ color/color = Color( 0.742188, 0.401535, 0.197144, 1 )
 [node name="Position2D2" type="Position2D" parent="Area2D"]
 
 editor/display_folded = true
-transform/rot = 181.927
+transform/rot = 180.0
 
 [node name="Particles2D" type="Particles2D" parent="Area2D/Position2D2"]
 
@@ -456,7 +382,7 @@ color/color = Color( 0.742188, 0.401535, 0.197144, 1 )
 [node name="Particles2D1" type="Particles2D" parent="Area2D/Position2D2"]
 
 visibility/blend_mode = 1
-transform/pos = Vector2( 6.53241, -21.942 )
+transform/pos = Vector2( 0, -22 )
 config/amount = 32
 config/lifetime = 0.3
 config/process_mode = 1
@@ -485,7 +411,7 @@ color/color = Color( 0.742188, 0.401535, 0.197144, 1 )
 [node name="Particles2D2" type="Particles2D" parent="Area2D/Position2D2"]
 
 visibility/blend_mode = 1
-transform/pos = Vector2( 13.4093, -45.421 )
+transform/pos = Vector2( 0, -44 )
 config/amount = 32
 config/lifetime = 0.3
 config/process_mode = 1
@@ -514,7 +440,7 @@ color/color = Color( 0.742188, 0.401535, 0.197144, 1 )
 [node name="Particles2D3" type="Particles2D" parent="Area2D/Position2D2"]
 
 visibility/blend_mode = 1
-transform/pos = Vector2( 14.3105, -71.0466 )
+transform/pos = Vector2( 0, -66 )
 config/amount = 32
 config/lifetime = 0.3
 config/process_mode = 1
@@ -543,7 +469,7 @@ color/color = Color( 0.742188, 0.401535, 0.197144, 1 )
 [node name="Particles2D4" type="Particles2D" parent="Area2D/Position2D2"]
 
 visibility/blend_mode = 1
-transform/pos = Vector2( 5.45959, -89.1727 )
+transform/pos = Vector2( 0, -88 )
 config/amount = 32
 config/lifetime = 0.3
 config/process_mode = 1
@@ -572,7 +498,7 @@ color/color = Color( 0.742188, 0.401535, 0.197144, 1 )
 [node name="Position2D3" type="Position2D" parent="Area2D"]
 
 editor/display_folded = true
-transform/rot = 269.54
+transform/rot = -90.0
 
 [node name="Particles2D" type="Particles2D" parent="Area2D/Position2D3"]
 
@@ -605,7 +531,7 @@ color/color = Color( 0.742188, 0.401535, 0.197144, 1 )
 [node name="Particles2D1" type="Particles2D" parent="Area2D/Position2D3"]
 
 visibility/blend_mode = 1
-transform/pos = Vector2( 6.53241, -21.942 )
+transform/pos = Vector2( 0, -22 )
 config/amount = 32
 config/lifetime = 0.3
 config/process_mode = 1
@@ -634,7 +560,7 @@ color/color = Color( 0.742188, 0.401535, 0.197144, 1 )
 [node name="Particles2D2" type="Particles2D" parent="Area2D/Position2D3"]
 
 visibility/blend_mode = 1
-transform/pos = Vector2( 13.4093, -45.421 )
+transform/pos = Vector2( 0, -44 )
 config/amount = 32
 config/lifetime = 0.3
 config/process_mode = 1
@@ -663,7 +589,7 @@ color/color = Color( 0.742188, 0.401535, 0.197144, 1 )
 [node name="Particles2D3" type="Particles2D" parent="Area2D/Position2D3"]
 
 visibility/blend_mode = 1
-transform/pos = Vector2( 14.3105, -71.0466 )
+transform/pos = Vector2( 0, -66 )
 config/amount = 32
 config/lifetime = 0.3
 config/process_mode = 1
@@ -692,7 +618,7 @@ color/color = Color( 0.742188, 0.401535, 0.197144, 1 )
 [node name="Particles2D4" type="Particles2D" parent="Area2D/Position2D3"]
 
 visibility/blend_mode = 1
-transform/pos = Vector2( 5.45959, -89.1727 )
+transform/pos = Vector2( 0, -88 )
 config/amount = 32
 config/lifetime = 0.3
 config/process_mode = 1
@@ -718,23 +644,24 @@ params/anim_initial_pos = 0.0
 randomness/initial_angle = 1.0
 color/color = Color( 0.742188, 0.401535, 0.197144, 1 )
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 
-visibility/visible = false
-build_mode = 0
-polygon = Vector2Array( 16.1889, -15.6712, 24.5712, -78.5387, 2.41794, -108.837, -8.35934, -93.8686, 3.01668, -74.709, -5.36566, -17.2302, -68.8319, -32.1986, -104.157, -8.24911, -95.7751, 6.71933, -77.2142, 0.731949, -67.6344, -7.65038, -38.895, -2.86047, -17.3404, 4.32439, -24.5253, 56.437, -22.1303, 85.7752, -8.95808, 100.145, 1.22046, 103.139, 12.5965, 86.3739, -1.17448, 62.4244, 3.01668, 16.3216, 23.3738, 17.519, 54.5081, 26.5001, 82.0501, 23.5064, 98.8147, 10.9329, 109.592, -5.83174, 90.4324, -16.609, 68.8778, -5.83174, 45.5271, -4.63426, 25.17, -13.0166 )
-shape_range = Vector2( 0, 9 )
+transform/pos = Vector2( 3.0531, -1.92634 )
+shape = SubResource( 13 )
 trigger = false
+_update_shape_index = 0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Area2D"]
 
 playback/process_mode = 1
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
-anims/play = SubResource( 11 )
+anims/play = SubResource( 12 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
 autoplay = "play"
+
+[connection signal="body_enter" from="Area2D" to="Area2D" method="_on_Area2D_body_enter"]
 
 
