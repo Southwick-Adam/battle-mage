@@ -15,7 +15,7 @@ func _on_Area2D_body_enter( body ):
 		_animate("explode")
 		velocity = Vector2(0,0)
 		body._freeze(.5,3)
-		body._take_damage(10)
+		body._take_damage(18)
 		body.get_node("Sprite").set_modulate("1f6dd1")
 
 func _erase():

@@ -1,10 +1,12 @@
-[gd_scene load_steps=8 format=1]
+[gd_scene load_steps=10 format=1]
 
-[ext_resource path="res://scripts/enemy.gd" type="Script" id=1]
-[ext_resource path="res://icon.png" type="Texture" id=2]
-[ext_resource path="res://scripts/enemy_health.gd" type="Script" id=3]
-[ext_resource path="res://assets/pixle.png" type="Texture" id=4]
-[ext_resource path="res://assets/health.png" type="Texture" id=5]
+[ext_resource path="res://scripts/zombie.gd" type="Script" id=1]
+[ext_resource path="res://assets/zombie.png" type="Texture" id=2]
+[ext_resource path="res://assets/mage-6.png" type="Texture" id=3]
+[ext_resource path="res://scripts/enemy_health.gd" type="Script" id=4]
+[ext_resource path="res://assets/pixle.png" type="Texture" id=5]
+[ext_resource path="res://assets/enemy health.png" type="Texture" id=6]
+[ext_resource path="res://icon.png" type="Texture" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -16,7 +18,7 @@ extents = Vector2( 29.3611, 29.51 )
 custom_solver_bias = 0.0
 radius = 14.6058
 
-[node name="Kthing" type="Node2D"]
+[node name="zombie" type="Node2D"]
 
 [node name="KinematicBody2D" type="KinematicBody2D" parent="." groups=[
 "enemy",
@@ -33,8 +35,17 @@ script/script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="KinematicBody2D"]
 
-transform/pos = Vector2( 0, -0.598736 )
+editor/display_folded = true
+transform/scale = Vector2( 0.3, 0.3 )
 texture = ExtResource( 2 )
+vframes = 3
+hframes = 3
+
+[node name="shadow" type="Sprite" parent="KinematicBody2D/Sprite"]
+
+visibility/opacity = 0.4
+z/z = -3
+texture = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D"]
 
@@ -52,10 +63,10 @@ focus/stop_mouse = false
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 0.0
-margin/top = -40.0
+margin/top = -27.0
 margin/right = 0.0
-margin/bottom = -40.0
-script/script = ExtResource( 3 )
+margin/bottom = -27.0
+script/script = ExtResource( 4 )
 
 [node name="background" type="TextureFrame" parent="KinematicBody2D/health_bar"]
 
@@ -67,7 +78,7 @@ margin/left = -68.0
 margin/top = -6.0
 margin/right = 68.0
 margin/bottom = 7.0
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 modulate = Color( 0.152071, 0.0894928, 0.199219, 1 )
 expand = true
 stretch_mode = 0
@@ -82,7 +93,7 @@ margin/left = -69.0
 margin/top = -8.0
 margin/right = 68.0
 margin/bottom = 7.0
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 modulate = Color( 0.445313, 0.0574036, 0.0574036, 1 )
 expand = true
 stretch_mode = 0
@@ -90,7 +101,7 @@ stretch_mode = 0
 [node name="Sprite" type="Sprite" parent="KinematicBody2D/health_bar"]
 
 transform/pos = Vector2( 0, 0.487679 )
-texture = ExtResource( 5 )
+texture = ExtResource( 6 )
 
 [node name="anchor" type="Position2D" parent="KinematicBody2D"]
 
@@ -103,7 +114,7 @@ transform/pos = Vector2( 47, 0 )
 [node name="Sprite" type="Sprite" parent="KinematicBody2D/anchor/Position2D"]
 
 transform/scale = Vector2( 0.4, 0.4 )
-texture = ExtResource( 2 )
+texture = ExtResource( 7 )
 
 [node name="attack" type="Area2D" parent="KinematicBody2D"]
 

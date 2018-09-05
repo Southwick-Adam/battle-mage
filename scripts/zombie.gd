@@ -91,18 +91,24 @@ func _fixed_process(delta):
 		get_node("Sprite").set_modulate("ffffff")
 
 #ANGLE ANIMS
-	if angle > -3*PI/4 and angle <= -PI/4:
+	if angle > -7*PI/8 and angle <= -5*PI/8:
+		get_node("Sprite").set_frame(5)
+	elif angle > -5*PI/8 and angle <= -3*PI/8:
+		get_node("Sprite").set_frame(4)
+	elif angle > -3*PI/8 and angle <= -PI/8:
+		get_node("Sprite").set_frame(3)
+	elif angle > -PI/8 and angle <= PI/8:
 		get_node("Sprite").set_frame(2)
-		get_node("Sprite").set_flip_h(false)
-	elif angle > -PI/4 and angle <= PI/4:
+	elif angle > PI/8 and angle <= 3*PI/8:
 		get_node("Sprite").set_frame(1)
-		get_node("Sprite").set_flip_h(false)
-	elif angle > PI/4 and angle <= 3*PI/4:
+	elif angle > 3*PI/8 and angle <= 5*PI/8:
 		get_node("Sprite").set_frame(0)
-		get_node("Sprite").set_flip_h(false)
+	elif angle > 3*PI/8 and angle <= PI/2:
+		get_node("Sprite").set_frame(8)
+	elif angle > 5*PI/8 and angle <= 7*PI/8:
+		get_node("Sprite").set_frame(7)
 	else:
-		get_node("Sprite").set_frame(1)
-		get_node("Sprite").set_flip_h(true)
+		get_node("Sprite").set_frame(6)
 
 #DEATH
 	if health <= 0:

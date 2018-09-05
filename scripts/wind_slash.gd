@@ -7,7 +7,7 @@ var velocity = Vector2()
 
 func _on_Area2D_body_enter( body ):
 	if body.is_in_group("enemy"):
-		body._take_damage(7)
+		body._take_damage(13)
 	timer = .15
 
 func _erase():

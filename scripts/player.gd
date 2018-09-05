@@ -5,12 +5,22 @@ var SPEED = 100
 
 var velocity = Vector2()
 var health = 100
-var damage_mult = 1
-
-var damage_score = 1
-
-var buffed = false
 var tex
+#BUFF VALUES
+var damage_mult = 1
+var damage_score = 1
+var buffed = 0
+#MANAS
+var mana_fire = 100
+var mana_water = 100
+var mana_wind = 100
+var mana_earth = 100
+var max_mana = 100
+#COSTS
+var fire_cost = Vector3(4,15,0.05)
+var water_cost = Vector3(3,12,0.1)
+var wind_cost = Vector3(2,12,0.03)
+var earth_cost = Vector3(5,8,0.03)
 
 #ELEMENT STATE
 var state = 1 #   1-fire 2-water 3-wind 4-earth
@@ -18,6 +28,10 @@ var buff_state
 
 signal health
 signal damage_mult
+signal mana_fire
+signal mana_water
+signal mana_wind
+signal mana_earth
 
 func _animate(anim):
 	if get_node("AnimationPlayer").get_current_animation() != anim:
@@ -38,7 +52,18 @@ func _buff_end():
 	elif buff_state == 4:
 		get_node("earth_armor")._animate("shrink")
 		damage_score = 1
-	buffed = false
+		SPEED = 100
+	buffed = 0
+
+func _mana_up(state,ammount):
+	if state == 1:
+		mana_fire += ammount
+	elif state == 2:
+		mana_water += ammount
+	elif state == 3:
+		mana_wind += ammount
+	elif state == 4:
+		mana_earth += ammount
 
 func _death():
 	set_fixed_process(false)
@@ -55,62 +80,80 @@ func _input(event):
 #PROJECTILE ATTACK
 	if (event.is_action_pressed("btn_z")):
 		var projectile
-		if state == 1: #FIRE
+		if state == 1 and mana_fire >= fire_cost.x: #FIRE
 			projectile = load("res://scenes/fireball.tscn").instance()
 			get_node("anchor/Position2D/AnimationPlayer").play("fire")
-		elif state == 2: #WATER
+			mana_fire -= fire_cost.x
+			get_node("/root/world").add_child(projectile)
+		elif state == 2 and mana_water >= water_cost.x: #WATER
 			projectile = load("res://scenes/icicle.tscn").instance()
 			get_node("anchor/Position2D/AnimationPlayer").play("water")
-		elif state == 3: #WIND
-			projectile = load("res://scenes/wind_slash.tscn").instance()
+			mana_water -= water_cost.x
 			get_node("/root/world").add_child(projectile)
-		elif state == 4: #EARTH
+		elif state == 3 and mana_wind >= wind_cost.x: #WIND
+			projectile = load("res://scenes/wind_slash.tscn").instance()
+			mana_wind -= wind_cost.x
+			get_node("/root/world").add_child(projectile)
+		elif state == 4 and mana_earth >= earth_cost.x: #EARTH
 			projectile = load("res://scenes/rock.tscn").instance()
-		get_node("/root/world").add_child(projectile)
+			mana_earth -= earth_cost.x
+			get_node("/root/world").add_child(projectile)
 #AOE
 	if (event.is_action_pressed("btn_x")):
 		var AOE
-		if state == 1: #FIRE
+		if state == 1 and mana_fire >= fire_cost.y: #FIRE
 			AOE = load("res://scenes/flame_wheel.tscn").instance()
-		elif state == 2: #WATER
+			mana_fire -= fire_cost.y
+			get_node("/root/world").add_child(AOE)
+		elif state == 2 and mana_water >= water_cost.y: #WATER
 			AOE = load("res://scenes/frost_field.tscn").instance()
 			get_node("anchor/Position2D/AnimationPlayer").play("water")
-		elif state == 3: #WIND
+			mana_water -= water_cost.y
+			get_node("/root/world").add_child(AOE)
+		elif state == 3 and mana_wind >= wind_cost.y: #WIND
 			AOE = load("res://scenes/whirlwind.tscn").instance()
-		elif state == 4: #EARTH
+			mana_wind -= wind_cost.y
+			get_node("/root/world").add_child(AOE)
+		elif state == 4 and mana_earth >= earth_cost.y: #EARTH
 			AOE = load("res://scenes/desert.tscn").instance()
-		if state == 1:
-			add_child(AOE)
-		else:
+			mana_earth -= earth_cost.y
 			get_node("/root/world").add_child(AOE)
 #BUFF
 	if (event.is_action_pressed("btn_c")):
-		if not buffed:
+		if buffed == 0:
 			buff_state = state
 			var buff
-			if state == 1: #FIRE
+			if state == 1 and mana_fire >= 10 * fire_cost.z: #FIRE
 				buff = load("res://scenes/flame_buff.tscn").instance()
+				add_child(buff)
 				get_node("Sprite").set_modulate("ff0000")
 				damage_mult = 1.5
 				emit_signal("damage_mult", damage_mult)
-			elif state == 2: #WATER
+				buffed = 1
+			elif state == 2 and mana_water >= 10 * water_cost.z: #WATER
 				buff = load("res://scenes/water_ball.tscn").instance()
 				add_child(buff)
-			elif state == 3: #WIND
+				buffed = 2
+			elif state == 3 and mana_wind >= 10 * wind_cost.z: #WIND
 				buff = load("res://scenes/wind_walk.tscn").instance()
 				SPEED = 250
-			elif state == 4: #EARTH
-				buff = load("res://scenes/earth_armor.tscn").instance()
-				damage_score = 0.33
-				SPEED = 60
-			add_child(buff)
-			buffed = true
+				add_child(buff)
+				buffed = 3
+			elif state == 4 and mana_earth >= 10 * earth_cost.z: #EARTH
+				get_node("earth_armor")._animate("create")
+				damage_score = 0.25
+				SPEED = 50
+				buffed = 4
 		else:
 			_buff_end()
 
 func _fixed_process(delta):
 #SIGNALS
 	emit_signal("health", health)
+	emit_signal("mana_fire", mana_fire)
+	emit_signal("mana_water", mana_water)
+	emit_signal("mana_wind", mana_wind)
+	emit_signal("mana_earth", mana_earth)
 #BASIC MOTION LAWS
 	var motion = velocity * delta
 	motion = move(motion)
@@ -134,27 +177,58 @@ func _fixed_process(delta):
 		get_node("anchor/Position2D").set_pos(Vector2(10,0))
 	elif state == 4:
 		get_node("anchor/Position2D").set_pos(Vector2(40,0))
-
+#BUFF COSTS
+	if buffed == 1:
+		mana_fire -= fire_cost.z
+		if mana_fire < fire_cost.z:
+			_buff_end()
+	elif buffed == 2:
+		mana_water -= water_cost.z
+		if mana_water < water_cost.z:
+			_buff_end()
+	elif buffed == 3:
+		mana_wind -= wind_cost.z
+		if mana_wind < wind_cost.z:
+			_buff_end()
+	elif buffed == 4:
+		mana_earth -= earth_cost.z
+		if mana_earth < earth_cost.z:
+			_buff_end()
+#MAX MANA
+	if mana_fire > max_mana:
+		mana_fire = max_mana
+	if mana_water > max_mana:
+		mana_water = max_mana
+	if mana_wind > max_mana:
+		mana_wind = max_mana
+	if mana_earth > max_mana:
+		mana_earth = max_mana
 #ANGLE ANIMS
 	if angle > -7*PI/8 and angle <= -5*PI/8:
-		_animate("up-left")
+		get_node("Sprite").set_frame(3)
 	elif angle > -5*PI/8 and angle <= -3*PI/8:
-		_animate("up")
+		get_node("Sprite").set_frame(4)
 	elif angle > -3*PI/8 and angle <= -PI/8:
-		_animate("up-right")
+		get_node("Sprite").set_frame(3)
 	elif angle > -PI/8 and angle <= PI/8:
-		_animate("right")
+		get_node("Sprite").set_frame(2)
 	elif angle > PI/8 and angle <= 3*PI/8:
-		_animate("down-right")
+		get_node("Sprite").set_frame(1)
 	elif angle > 3*PI/8 and angle <= 5*PI/8:
-		_animate("down")
+		get_node("Sprite").set_frame(0)
 	elif angle > 5*PI/8 and angle <= 7*PI/8:
-		_animate("down-left")
+		get_node("Sprite").set_frame(1)
 	else:
-		_animate("left")
+		get_node("Sprite").set_frame(2)
+
+	if angle > -PI/2 and angle <= PI/2:
+		get_node("Sprite").set_flip_h(true)
+	else:
+		get_node("Sprite").set_flip_h(false)
 #DEATH
 	if health <= 0:
-		_buff_end()
+		if buff_state != 0:
+			_buff_end()
 		_death()
 
 func _ready():

@@ -14,7 +14,7 @@ func _fixed_process(delta):
 	if timer <= 0:
 		_animate("melt")
 #EFFECT
-	get_parent()._take_damage(0.1)
+	get_parent()._take_damage(0.2)
 
 func _ready():
 	set_fixed_process(true)

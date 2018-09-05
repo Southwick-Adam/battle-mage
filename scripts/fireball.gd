@@ -12,15 +12,16 @@ func _animate(anim):
 		get_node("AnimationPlayer").play(anim)
 
 func _on_Area2D_body_enter( body ):
-	velocity = Vector2(0,0)
-	body._take_damage(10)
-	_animate("boom")
-	timer = 10
-	var rng = randf()
-	if rng < burn_perc:
-		var scene = load("res://scenes/burn.tscn")
-		var burn = scene.instance()
-		body.add_child(burn)
+	if body.is_in_group("enemy"):
+		velocity = Vector2(0,0)
+		body._take_damage(20)
+		_animate("boom")
+		timer = 10
+		var rng = randf()
+		if rng < burn_perc:
+			var scene = load("res://scenes/burn.tscn")
+			var burn = scene.instance()
+			body.add_child(burn)
 
 func _erase():
 	get_parent().queue_free()

@@ -1,171 +1,94 @@
 extends KinematicBody2D
 
-const SPEED = 100
-const ACCEL = 0.5
+const SPEED = 700
+const ACCEL = 0.04
 
 var velocity = Vector2()
-var health = 100
-var damage_mult = 1
+var timer = 2.3
 
-var damage_score = 1
+var target1
+var target2
+var target3
+var target4
+var target5
+var target6
+var target7
+var target8
 
-var buffed = false
-var tex
+func _pull(target):
+	var pos_dif = target.get_global_pos() - get_node("Area2D/Position2D").get_global_pos()
+	if abs(pos_dif.x) > 20:
+		target.set_global_pos(Vector2(target.get_global_pos().x - 1.5*(pos_dif.x/abs(pos_dif.x)),target.get_global_pos().y))
+	if abs(pos_dif.y) > 20:
+		target.set_global_pos(Vector2(target.get_global_pos().x,target.get_global_pos().y - 1.5*(pos_dif.y/abs(pos_dif.y))))
+	target._take_damage(0.1)
 
-#ELEMENT STATE
-var state = 1 #   1-fire 2-water 3-wind 4-earth
-var buff_state
-
-signal health
-signal damage_mult
-
-func _animate(anim):
-	if get_node("AnimationPlayer").get_current_animation() != anim:
-		get_node("AnimationPlayer").play(anim)
-
-func _boom(anim):
-	if get_node("anchor/Position2D/AnimationPlayer").get_current_animation() != anim:
-		get_node("anchor/Position2D/AnimationPlayer").play(anim)
-
-func _take_damage(damage):
-	health -= damage * damage_score
-
-func _speed(vel):
-	SPEED = vel
-
-func _buff_end():
-	if buff_state == 1:
-		get_node("flame_buff").queue_free()
-		get_node("Sprite").set_modulate("ffffff")
-	elif buff_state == 2:
-		get_node("water_ball")._animate("shrink")
-	elif buff_state == 3:
-		get_node("wind_walk")._animate("shrink")
-		_speed(100)
-	elif buff_state == 4:
-		pass
-	buffed = false
-
-func _input(event):
-#ELEMENT SHIFT
-	if (event.is_action_pressed("btn_a")):
-		if state == 4:
-			state = 1
+func _on_Area2D_body_enter( body ):
+	if body.is_in_group("enemy"):
+		if target1 == null:
+			target1 = body
 		else:
-			state += 1
-#PROJECTILE ATTACK
-	if (event.is_action_pressed("btn_z")):
-		var projectile
-#FIRE
-		if state == 1:
-			projectile = load("res://scenes/fireball.tscn").instance()
-#WATER
-		elif state == 2:
-			projectile = load("res://scenes/icicle.tscn").instance()
-#WIND
-		elif state == 3:
-			projectile = load("res://scenes/wind_slash.tscn").instance()
-			get_node("/root/world").add_child(projectile)
-#EARTH
-		elif state == 4:
-			projectile = load("res://scenes/rock.tscn").instance()
-
-		get_node("/root/world").add_child(projectile)
-
-#AOE
-	if (event.is_action_pressed("btn_x")):
-		var AOE
-#FIRE
-		if state == 1:
-			AOE = load("res://scenes/flame_wheel.tscn").instance()
-#WATER
-		elif state == 2:
-			AOE = load("res://scenes/frost_field.tscn").instance()
-#WIND
-		elif state == 3:
-			AOE = load("res://scenes/whirlwind.tscn").instance()
-#EARTH
-		elif state == 4:
-			AOE = load("res://scenes/desert.tscn").instance()
-
-		if state == 1:
-			add_child(AOE)
-		else:
-			get_node("/root/world").add_child(AOE)
-
-#BUFF
-	if (event.is_action_pressed("btn_c")):
-		if not buffed:
-			buff_state = state
-			var buff
-#FIRE
-			if state == 1:
-				buff = load("res://scenes/flame_buff.tscn").instance()
-				get_node("Sprite").set_modulate("ff0000")
-				damage_mult = 1.5
-				emit_signal("damage_mult", damage_mult)
-#WATER
-			elif state == 2:
-				buff = load("res://scenes/water_ball.tscn").instance()
-				add_child(buff)
-#WIND
-			elif state == 3:
-				buff = load("res://scenes/wind_walk.tscn").instance()
-				_speed(250)
-#EARTH
-			elif state == 4:
-				pass
-
-			add_child(buff)
-			buffed = true
-		else:
-			_buff_end()
+			if target2 == null:
+				target2 = body
+			else:
+				if target3 == null:
+					target3 = body
+				else:
+					if target4 == null:
+						target4 = body
+					else:
+						if target5 == null:
+							target5 = body
+						else:
+							if target6 == null:
+								target6 = body
+							else:
+								if target7 == null:
+									target7 = body
+								else:
+									if target8 == null:
+										target8 = body
+									else:
+										get_node("Area2D").set_enable_monitoring(false)
 
 func _fixed_process(delta):
-#SIGNALS
-	emit_signal("health", health)
+	timer -= delta
+	if timer <= 0:
+		get_parent().queue_free()
 #BASIC MOTION LAWS
 	var motion = velocity * delta
 	motion = move(motion)
-#MOVE
-	var mouse_pos = get_global_mouse_pos()
-	var pos_dif = mouse_pos - get_global_pos()
-	var angle = atan2(pos_dif.y,pos_dif.x)
-	if (abs(pos_dif.x) > 10 or abs(pos_dif.y) > 10):
-		velocity.x = cos(angle) * SPEED
-		velocity.y = sin(angle) * SPEED
-		get_node("anchor").set_rot(-angle)
-	else:
-		velocity.x = lerp(velocity.x,0,ACCEL)
-		velocity.y = lerp(velocity.y,0,ACCEL)
-#POSITION W/ ELEMENTS
-	if state == 1:
-		get_node("anchor/Position2D").set_pos(Vector2(25,0))
-	elif state == 2:
-		get_node("anchor/Position2D").set_pos(Vector2(30,0))
-	elif state == 3:
-		get_node("anchor/Position2D").set_pos(Vector2(10,0))
-	elif state == 4:
-		get_node("anchor/Position2D").set_pos(Vector2(45,0))
-
-#ANGLE ANIMS
-	if angle > -7*PI/8 and angle <= -5*PI/8:
-		_animate("up-left")
-	elif angle > -5*PI/8 and angle <= -3*PI/8:
-		_animate("up")
-	elif angle > -3*PI/8 and angle <= -PI/8:
-		_animate("up-right")
-	elif angle > -PI/8 and angle <= PI/8:
-		_animate("right")
-	elif angle > PI/8 and angle <= 3*PI/8:
-		_animate("down-right")
-	elif angle > 3*PI/8 and angle <= 5*PI/8:
-		_animate("down")
-	elif angle > 5*PI/8 and angle <= 7*PI/8:
-		_animate("down-left")
-	else:
-		_animate("left")
+	velocity.x = lerp(velocity.x,0,ACCEL)
+	velocity.y = lerp(velocity.y,0,ACCEL)
+#EFFECT
+	if target1 != null:
+		target1._freeze(0,.5)
+		_pull(target1)
+	if target2 != null:
+		target2._freeze(0,.5)
+		_pull(target2)
+	if target3 != null:
+		target3._freeze(0,.5)
+		_pull(target3)
+	if target4 != null:
+		target4._freeze(0,.5)
+		_pull(target4)
+	if target5 != null:
+		target5._freeze(0,.5)
+		_pull(target5)
+	if target6 != null:
+		target6._freeze(0,.5)
+		_pull(target6)
+	if target7 != null:
+		target7._freeze(0,.5)
+		_pull(target7)
+	if target8 != null:
+		target8._freeze(0,.5)
+		_pull(target8)
 
 func _ready():
+	set_global_pos(get_node("/root/world/player/KinematicBody2D/anchor/Position2D").get_global_pos())
+	var angle = get_node("/root/world/player/KinematicBody2D/anchor").get_rot()
+	velocity.x = cos(angle) * SPEED
+	velocity.y = -sin(angle) * SPEED
 	set_fixed_process(true)
-	set_process_input(true)

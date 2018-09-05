@@ -13,25 +13,25 @@ func _input(event):
 
 func _fixed_process(delta):
 	if state == 1:
-		get_node("fire/Sprite").set_opacity(1)
-		get_node("water/Sprite").set_opacity(op_lvl)
-		get_node("wind/Sprite").set_opacity(op_lvl)
-		get_node("earth/Sprite").set_opacity(op_lvl)
+		get_node("fire/button/Sprite").set_opacity(1)
+		get_node("water/button/Sprite").set_opacity(op_lvl)
+		get_node("wind/button/Sprite").set_opacity(op_lvl)
+		get_node("earth/button/Sprite").set_opacity(op_lvl)
 	elif state == 2:
-		get_node("fire/Sprite").set_opacity(op_lvl)
-		get_node("water/Sprite").set_opacity(1)
-		get_node("wind/Sprite").set_opacity(op_lvl)
-		get_node("earth/Sprite").set_opacity(op_lvl)
+		get_node("fire/button/Sprite").set_opacity(op_lvl)
+		get_node("water/button/Sprite").set_opacity(1)
+		get_node("wind/button/Sprite").set_opacity(op_lvl)
+		get_node("earth/button/Sprite").set_opacity(op_lvl)
 	elif state == 3:
-		get_node("fire/Sprite").set_opacity(op_lvl)
-		get_node("water/Sprite").set_opacity(op_lvl)
-		get_node("wind/Sprite").set_opacity(1)
-		get_node("earth/Sprite").set_opacity(op_lvl)
+		get_node("fire/button/Sprite").set_opacity(op_lvl)
+		get_node("water/button/Sprite").set_opacity(op_lvl)
+		get_node("wind/button/Sprite").set_opacity(1)
+		get_node("earth/button/Sprite").set_opacity(op_lvl)
 	elif state == 4:
-		get_node("fire/Sprite").set_opacity(op_lvl)
-		get_node("water/Sprite").set_opacity(op_lvl)
-		get_node("wind/Sprite").set_opacity(op_lvl)
-		get_node("earth/Sprite").set_opacity(1)
+		get_node("fire/button/Sprite").set_opacity(op_lvl)
+		get_node("water/button/Sprite").set_opacity(op_lvl)
+		get_node("wind/button/Sprite").set_opacity(op_lvl)
+		get_node("earth/button/Sprite").set_opacity(1)
 
 func _ready():
 	set_fixed_process(true)

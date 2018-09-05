@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=1]
+[gd_scene load_steps=4 format=1]
 
 [ext_resource path="res://scenes/health_bar.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/element_btns.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/mover.tscn" type="PackedScene" id=3]
 
 [node name="HUD" type="CanvasLayer"]
 
@@ -21,5 +22,9 @@ margin/bottom = 60.0
 [node name="element_btns" parent="." instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 937.921, 474.934 )
+
+[node name="mover" parent="." instance=ExtResource( 3 )]
+
+transform/pos = Vector2( 109.631, 489.746 )
 
 

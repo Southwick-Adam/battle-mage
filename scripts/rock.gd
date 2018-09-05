@@ -14,7 +14,7 @@ func _on_Area2D_body_enter( body ):
 	velocity = Vector2(0,0)
 	_animate("break")
 	if body.is_in_group("enemy"):
-		body._take_damage(20)
+		body._take_damage(30)
 
 func _erase():
 	get_parent().queue_free()

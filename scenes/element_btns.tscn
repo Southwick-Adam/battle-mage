@@ -1,12 +1,17 @@
-[gd_scene load_steps=4 format=1]
+[gd_scene load_steps=9 format=1]
 
 [ext_resource path="res://scripts/element_btns.gd" type="Script" id=1]
-[ext_resource path="res://assets/New Piskel.png" type="Texture" id=2]
+[ext_resource path="res://scripts/fire_button.gd" type="Script" id=2]
+[ext_resource path="res://assets/pixle.png" type="Texture" id=3]
+[ext_resource path="res://assets/buttons.png" type="Texture" id=4]
+[ext_resource path="res://scripts/water_button.gd" type="Script" id=5]
+[ext_resource path="res://scripts/wind_button.gd" type="Script" id=6]
+[ext_resource path="res://scripts/earth_button.gd" type="Script" id=7]
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-radius = 50.2394
+extents = Vector2( 48.1031, 47.097 )
 
 [node name="element_btns" type="Node2D"]
 
@@ -25,13 +30,56 @@ gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
 
-[node name="Sprite" type="Sprite" parent="fire"]
+[node name="button" type="Control" parent="fire"]
 
-texture = ExtResource( 2 )
+editor/display_folded = true
+focus/ignore_mouse = true
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 0.0
+margin/bottom = 0.0
+script/script = ExtResource( 2 )
+
+[node name="background" type="TextureFrame" parent="fire/button"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = -39.0
+margin/top = -39.0
+margin/right = 39.0
+margin/bottom = 39.0
+texture = ExtResource( 3 )
+modulate = Color( 0.292969, 0.246531, 0.180817, 1 )
+expand = true
+stretch_mode = 0
+
+[node name="mana" type="TextureFrame" parent="fire/button"]
+
+rect/scale = Vector2( 1, -1 )
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = -39.0
+margin/top = 39.0
+margin/right = 39.0
+margin/bottom = 117.0
+texture = ExtResource( 3 )
+modulate = Color( 0.84375, 0.454834, 0, 1 )
+expand = true
+stretch_mode = 0
+
+[node name="Sprite" type="Sprite" parent="fire/button"]
+
+transform/scale = Vector2( 0.3333, 0.3333 )
+texture = ExtResource( 4 )
 vframes = 2
 hframes = 2
-frame = 2
-modulate = Color( 1, 0.492188, 0, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="fire"]
 
@@ -53,12 +101,56 @@ gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
 
-[node name="Sprite" type="Sprite" parent="water"]
+[node name="button" type="Control" parent="water"]
 
-texture = ExtResource( 2 )
+focus/ignore_mouse = true
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 0.0
+margin/bottom = 0.0
+script/script = ExtResource( 5 )
+
+[node name="background" type="TextureFrame" parent="water/button"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = -39.0
+margin/top = -39.0
+margin/right = 39.0
+margin/bottom = 39.0
+texture = ExtResource( 3 )
+modulate = Color( 0.180817, 0.221997, 0.292969, 1 )
+expand = true
+stretch_mode = 0
+
+[node name="mana" type="TextureFrame" parent="water/button"]
+
+rect/scale = Vector2( 1, -1 )
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = -39.0
+margin/top = 39.0
+margin/right = 39.0
+margin/bottom = 117.0
+texture = ExtResource( 3 )
+modulate = Color( 0, 0.645996, 0.84375, 1 )
+expand = true
+stretch_mode = 0
+
+[node name="Sprite" type="Sprite" parent="water/button"]
+
+transform/scale = Vector2( 0.3333, 0.3333 )
+texture = ExtResource( 4 )
 vframes = 2
 hframes = 2
-modulate = Color( 0.259003, 0.483841, 0.960938, 1 )
+frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="water"]
 
@@ -80,11 +172,57 @@ gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
 
-[node name="Sprite" type="Sprite" parent="wind"]
+[node name="button" type="Control" parent="wind"]
 
-texture = ExtResource( 2 )
+editor/display_folded = true
+focus/ignore_mouse = true
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 0.0
+margin/bottom = 0.0
+script/script = ExtResource( 6 )
+
+[node name="background" type="TextureFrame" parent="wind/button"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = -39.0
+margin/top = -39.0
+margin/right = 39.0
+margin/bottom = 39.0
+texture = ExtResource( 3 )
+modulate = Color( 0.27451, 0.231373, 0.305882, 1 )
+expand = true
+stretch_mode = 0
+
+[node name="mana" type="TextureFrame" parent="wind/button"]
+
+rect/scale = Vector2( 1, -1 )
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = -39.0
+margin/top = 39.0
+margin/right = 39.0
+margin/bottom = 117.0
+texture = ExtResource( 3 )
+modulate = Color( 0.888834, 0.824738, 0.917969, 1 )
+expand = true
+stretch_mode = 0
+
+[node name="Sprite" type="Sprite" parent="wind/button"]
+
+transform/scale = Vector2( 0.3333, 0.3333 )
+texture = ExtResource( 4 )
 vframes = 2
 hframes = 2
+frame = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="wind"]
 
@@ -105,13 +243,56 @@ gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
 
-[node name="Sprite" type="Sprite" parent="earth"]
+[node name="button" type="Control" parent="earth"]
 
-texture = ExtResource( 2 )
+focus/ignore_mouse = true
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 0.0
+margin/bottom = 0.0
+script/script = ExtResource( 7 )
+
+[node name="background" type="TextureFrame" parent="earth/button"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = -39.0
+margin/top = -39.0
+margin/right = 39.0
+margin/bottom = 39.0
+texture = ExtResource( 3 )
+modulate = Color( 0.160156, 0.151197, 0.135757, 1 )
+expand = true
+stretch_mode = 0
+
+[node name="mana" type="TextureFrame" parent="earth/button"]
+
+rect/scale = Vector2( 1, -1 )
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = -39.0
+margin/top = 39.0
+margin/right = 39.0
+margin/bottom = 117.0
+texture = ExtResource( 3 )
+modulate = Color( 0.492188, 0.452654, 0.384521, 1 )
+expand = true
+stretch_mode = 0
+
+[node name="Sprite" type="Sprite" parent="earth/button"]
+
+transform/scale = Vector2( 0.3333, 0.3333 )
+texture = ExtResource( 4 )
 vframes = 2
 hframes = 2
-frame = 1
-modulate = Color( 0.53125, 0.433716, 0.265625, 1 )
+frame = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="earth"]
 
