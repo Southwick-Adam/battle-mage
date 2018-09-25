@@ -18,13 +18,16 @@ var mana_earth = 100
 var max_mana = 100
 #COSTS
 var fire_cost = Vector3(4,15,0.05)
-var water_cost = Vector3(3,12,0.1)
+var water_cost = Vector3(3,12,0.08)
 var wind_cost = Vector3(2,12,0.03)
-var earth_cost = Vector3(5,8,0.03)
+var earth_cost = Vector3(4,15,0.03)
+
+#COOLDOWNS
+var AOE_timer = 0
+var buff_timer = 0
 
 #ELEMENT STATE
 var state = 1 #   1-fire 2-water 3-wind 4-earth
-var buff_state
 
 signal health
 signal damage_mult
@@ -41,19 +44,20 @@ func _take_damage(damage):
 	health -= (damage * damage_score)
 
 func _buff_end():
-	if buff_state == 1:
+	if buffed == 1:
 		get_node("flame_buff").queue_free()
 		get_node("Sprite").set_modulate("ffffff")
-	elif buff_state == 2:
+	elif buffed == 2:
 		get_node("water_ball")._animate("shrink")
-	elif buff_state == 3:
+	elif buffed == 3:
 		get_node("wind_walk")._animate("shrink")
 		SPEED = 100
-	elif buff_state == 4:
+	elif buffed == 4:
 		get_node("earth_armor")._animate("shrink")
 		damage_score = 1
 		SPEED = 100
 	buffed = 0
+	buff_timer = 0.5
 
 func _mana_up(state,ammount):
 	if state == 1:
@@ -99,7 +103,7 @@ func _input(event):
 			mana_earth -= earth_cost.x
 			get_node("/root/world").add_child(projectile)
 #AOE
-	if (event.is_action_pressed("btn_x")):
+	if (event.is_action_pressed("btn_x")) and AOE_timer <= 0:
 		var AOE
 		if state == 1 and mana_fire >= fire_cost.y: #FIRE
 			AOE = load("res://scenes/flame_wheel.tscn").instance()
@@ -118,10 +122,10 @@ func _input(event):
 			AOE = load("res://scenes/desert.tscn").instance()
 			mana_earth -= earth_cost.y
 			get_node("/root/world").add_child(AOE)
+		AOE_timer = 2
 #BUFF
-	if (event.is_action_pressed("btn_c")):
+	if (event.is_action_pressed("btn_c")) and buff_timer <= 0:
 		if buffed == 0:
-			buff_state = state
 			var buff
 			if state == 1 and mana_fire >= 10 * fire_cost.z: #FIRE
 				buff = load("res://scenes/flame_buff.tscn").instance()
@@ -194,6 +198,11 @@ func _fixed_process(delta):
 		mana_earth -= earth_cost.z
 		if mana_earth < earth_cost.z:
 			_buff_end()
+#COOLDOWN
+	if AOE_timer >= 0:
+		AOE_timer -= delta
+	if buff_timer >= 0:
+		buff_timer -= delta
 #MAX MANA
 	if mana_fire > max_mana:
 		mana_fire = max_mana
@@ -227,7 +236,7 @@ func _fixed_process(delta):
 		get_node("Sprite").set_flip_h(false)
 #DEATH
 	if health <= 0:
-		if buff_state != 0:
+		if buffed != 0:
 			_buff_end()
 		_death()
 

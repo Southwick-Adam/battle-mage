@@ -15,6 +15,7 @@ func _fixed_process(delta):
 		_animate("melt")
 #EFFECT
 	get_parent()._take_damage(0.2)
+	get_parent()._stun()
 
 func _ready():
 	set_fixed_process(true)

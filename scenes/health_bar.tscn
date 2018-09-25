@@ -2,7 +2,7 @@
 
 [ext_resource path="res://scripts/health_bar.gd" type="Script" id=1]
 [ext_resource path="res://assets/pixle.png" type="Texture" id=2]
-[ext_resource path="res://assets/health.png" type="Texture" id=3]
+[ext_resource path="res://assets/enemy health.png" type="Texture" id=3]
 
 [node name="health_bar" type="Control"]
 
@@ -23,7 +23,7 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = -68.0
-margin/top = -6.0
+margin/top = -7.0
 margin/right = 68.0
 margin/bottom = 7.0
 texture = ExtResource( 2 )
@@ -38,7 +38,7 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = -69.0
-margin/top = -8.0
+margin/top = -7.0
 margin/right = 68.0
 margin/bottom = 7.0
 texture = ExtResource( 2 )

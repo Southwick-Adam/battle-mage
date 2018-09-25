@@ -20,7 +20,7 @@ var stun_timer = 0
 var frozen = false
 var dead = false
 #attributes
-var attack_power = 3
+var attack_power = 10
 
 signal health
 
@@ -28,16 +28,16 @@ func _update(dam):
 	damage_mult = dam
 
 func _take_damage(damage):
-	health -= damage * damage_mult * 3
+	health -= (damage * damage_mult)/2
 
 func _stun():
-	attack_timer = 0.4
+	attack_timer = 1.2
 	stun_timer = 0.4
 
 func _on_attack_body_enter( body ):
 	if body == player:
 		body._take_damage(attack_power)
-		attack_timer = 0.4
+		attack_timer = 1.2
 		get_node("anchor/Position2D/AnimationPlayer").play("attack")
 
 func _freeze(perc, time):
@@ -63,7 +63,7 @@ func _mana_spawn(ammount):
 func _death():
 	var drop_rng = randi()%4+1
 	_mana_spawn(drop_rng * attack_power/5)
-	get_node("/root/world/HUD/counter")._update(50)
+	get_node("/root/world/HUD/counter")._update(100)
 	get_parent().set_opacity(0)
 	get_node("attack").set_enable_monitoring(false)
 	get_node("CollisionShape2D").queue_free()
@@ -113,7 +113,7 @@ func _fixed_process(delta):
 #ANGLE ANIMS
 		if stun_timer <= 0:
 			if angle > -7*PI/8 and angle <= -5*PI/8:
-				get_node("Sprite").set_frame(5)
+				get_node("Sprite").set_frame(3)
 			elif angle > -5*PI/8 and angle <= -3*PI/8:
 				get_node("Sprite").set_frame(4)
 			elif angle > -3*PI/8 and angle <= -PI/8:
@@ -124,12 +124,15 @@ func _fixed_process(delta):
 				get_node("Sprite").set_frame(1)
 			elif angle > 3*PI/8 and angle <= 5*PI/8:
 				get_node("Sprite").set_frame(0)
-			elif angle > 3*PI/8 and angle <= PI/2:
-				get_node("Sprite").set_frame(8)
 			elif angle > 5*PI/8 and angle <= 7*PI/8:
-				get_node("Sprite").set_frame(7)
+				get_node("Sprite").set_frame(1)
 			else:
-				get_node("Sprite").set_frame(6)
+				get_node("Sprite").set_frame(2)
+	
+			if angle > -PI/2 and angle <= PI/2:
+				get_node("Sprite").set_flip_h(false)
+			else:
+				get_node("Sprite").set_flip_h(true)
 
 #DEATH
 	if health <= 0:
@@ -141,6 +144,6 @@ func _fixed_process(delta):
 
 func _ready():
 	set_fixed_process(true)
-	SPEED = rand_range(70,120)
+	SPEED = rand_range(10,30)
 	speed_val = SPEED
 	player.connect("damage_mult", self, "_update")

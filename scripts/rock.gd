@@ -15,6 +15,7 @@ func _on_Area2D_body_enter( body ):
 	_animate("break")
 	if body.is_in_group("enemy"):
 		body._take_damage(30)
+		body._stun()
 
 func _erase():
 	get_parent().queue_free()

@@ -19,7 +19,7 @@ func _fixed_process(delta):
 #EFFECT
 	damage_timer -= delta
 	if damage_timer <= 0:
-		get_parent()._take_damage(1)
+		get_parent()._take_damage(1.2)
 		damage_timer = 0.1
 
 func _ready():

@@ -113,7 +113,7 @@ func _fixed_process(delta):
 #ANGLE ANIMS
 		if stun_timer <= 0:
 			if angle > -7*PI/8 and angle <= -5*PI/8:
-				get_node("Sprite").set_frame(5)
+				get_node("Sprite").set_frame(3)
 			elif angle > -5*PI/8 and angle <= -3*PI/8:
 				get_node("Sprite").set_frame(4)
 			elif angle > -3*PI/8 and angle <= -PI/8:
@@ -124,12 +124,15 @@ func _fixed_process(delta):
 				get_node("Sprite").set_frame(1)
 			elif angle > 3*PI/8 and angle <= 5*PI/8:
 				get_node("Sprite").set_frame(0)
-			elif angle > 3*PI/8 and angle <= PI/2:
-				get_node("Sprite").set_frame(8)
 			elif angle > 5*PI/8 and angle <= 7*PI/8:
-				get_node("Sprite").set_frame(7)
+				get_node("Sprite").set_frame(1)
 			else:
-				get_node("Sprite").set_frame(6)
+				get_node("Sprite").set_frame(2)
+	
+			if angle > -PI/2 and angle <= PI/2:
+				get_node("Sprite").set_flip_h(false)
+			else:
+				get_node("Sprite").set_flip_h(true)
 
 #DEATH
 	if health <= 0:

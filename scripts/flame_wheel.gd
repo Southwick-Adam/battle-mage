@@ -20,6 +20,7 @@ func _fixed_process(delta):
 #DAMAGE
 	if not marked.empty():
 		marked.front()._take_damage(0.2)
+		marked.front()._stun()
 		marked.push_back(marked.front())
 
 func _ready():

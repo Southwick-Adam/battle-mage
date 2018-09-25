@@ -7,7 +7,7 @@
 [sub_resource type="ConvexPolygonShape2D" id=1]
 
 custom_solver_bias = 0.0
-points = Vector2Array( -4.54298, -7.72118, -0.24115, -7.72118, 4.41917, 6.61828, -5.25996, 6.97676 )
+points = Vector2Array( 4.84492, 6.23972, -6.11955, 6.38211, -4.83799, -7.99986, 1.56982, -8.42705 )
 
 [sub_resource type="Animation" id=2]
 
@@ -194,7 +194,7 @@ texture = ExtResource( 2 )
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="KinematicBody2D/Area2D"]
 
 build_mode = 0
-polygon = Vector2Array( -4.54298, -7.72118, -0.24115, -7.72118, 4.41917, 6.61828, -5.25996, 6.97676 )
+polygon = Vector2Array( 1.56982, -8.42705, -4.83799, -7.99986, -6.11955, 6.38211, 4.84492, 6.23972 )
 shape_range = Vector2( 0, 0 )
 trigger = false
 
