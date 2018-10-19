@@ -34,4 +34,15 @@ transform/pos = Vector2( 110, 490 )
 
 transform/pos = Vector2( 538.089, 15 )
 
+[node name="MarginContainer" type="MarginContainer" parent="."]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 1136.0
+margin/bottom = 640.0
+
 

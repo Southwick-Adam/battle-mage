@@ -63,7 +63,7 @@ func _mana_spawn(ammount):
 func _death():
 	var drop_rng = randi()%4+1
 	_mana_spawn(drop_rng * attack_power/5)
-	get_node("/root/world/HUD/counter")._update(100)
+	get_node("/root/world/HUD/GUI")._update(100)
 	get_parent().set_opacity(0)
 	get_node("attack").set_enable_monitoring(false)
 	get_node("CollisionShape2D").queue_free()
@@ -110,6 +110,11 @@ func _fixed_process(delta):
 #STUN
 		if stun_timer >= 0:
 			stun_timer -= delta
+#Z SCORE
+		if get_global_pos().y > player.get_global_pos().y:
+			set_z(3)
+		else:
+			set_z(-1)
 #ANGLE ANIMS
 		if stun_timer <= 0:
 			if angle > -7*PI/8 and angle <= -5*PI/8:
