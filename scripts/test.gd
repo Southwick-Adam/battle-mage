@@ -1,243 +1,170 @@
-extends KinematicBody2D
+extends Control
 
-const ACCEL = 0.5
-var SPEED = 100
+var op_lvl = 0.4
 
-var velocity = Vector2()
-var health = 100
-var tex
-#BUFF VALUES
-var damage_mult = 1
-var damage_score = 1
-var buffed = 0
-#MANAS
-var mana_fire = 100
-var mana_water = 100
-var mana_wind = 100
-var mana_earth = 100
-var max_mana = 100
-#COSTS
-var fire_cost = Vector3(4,15,0.05)
-var water_cost = Vector3(3,12,0.08)
-var wind_cost = Vector3(2,12,0.03)
-var earth_cost = Vector3(4,15,0.03)
+onready var fire = get_node("elements/fire")
+onready var water = get_node("elements/water")
+onready var wind = get_node("elements/wind")
+onready var earth = get_node("elements/earth")
 
-#COOLDOWNS
-var AOE_timer = 0
-var buff_timer = 0
+onready var score = get_node("counters/scores_v/scores_h/score/Label")
+onready var kills = get_node("counters/scores_v/scores_h/kills/Label")
+onready var time = get_node("counters/scores_v/scores_h/time/Label")
 
-#ELEMENT STATE
-var state = 1 #   1-fire 2-water 3-wind 4-earth
+onready var fire_mana = get_node("elements/fire/color")
+onready var water_mana = get_node("elements/water/color")
+onready var wind_mana = get_node("elements/wind/color")
+onready var earth_mana = get_node("elements/earth/color")
 
-signal damage_mult
-signal mana_fire
-signal mana_water
-signal mana_wind
-signal mana_earth
+onready var window = get_viewport().get_visible_rect().size
+onready var player = get_node("/root/world/player/KinematicBody2D")
 
-func _animate(anim):
-	if get_node("AnimationPlayer").get_current_animation() != anim:
-		get_node("AnimationPlayer").play(anim)
+var max_value = 100.0
 
-func _take_damage(damage):
-	health -= (damage * damage_score)
+var fire_percent = 1.0
+var water_percent = 1.0
+var wind_percent = 1.0
+var earth_percent = 1.0
 
-func _change_state(element):
-	state = element
+var fire_value = 100.0
+var water_value = 100.0
+var wind_value = 100.0
+var earth_value = 100.0
 
-#BUFF
-func _on_buff_button_pressed():
-	if buffed == 0 and buff_timer <= 0:
-		var buff
-		if state == 1 and mana_fire >= 10 * fire_cost.z: #FIRE
-			buff = load("res://scenes/flame_buff.tscn").instance()
-			add_child(buff)
-			get_node("Sprite").set_modulate("ff0000")
-			damage_mult = 1.5
-			emit_signal("damage_mult", damage_mult)
-			buffed = 1
-		elif state == 2 and mana_water >= 10 * water_cost.z: #WATER
-			buff = load("res://scenes/water_ball.tscn").instance()
-			add_child(buff)
-			buffed = 2
-		elif state == 3 and mana_wind >= 10 * wind_cost.z: #WIND
-			buff = load("res://scenes/wind_walk.tscn").instance()
-			SPEED = 250
-			add_child(buff)
-			buffed = 3
-		elif state == 4 and mana_earth >= 10 * earth_cost.z: #EARTH
-			get_node("earth_armor")._animate("create")
-			damage_score = 0.25
-			SPEED = 50
-			buffed = 4
-	else:
-		_buff_end()
+var score_count = 0
+var kill_count = 0
+var timer = 0
+var minuite = 0
+var state = 1
+var btn_timer_state = false
+var btn_timer = 0
 
-func _buff_end():
-	if buffed == 1:
-		get_node("flame_buff").queue_free()
-		get_node("Sprite").set_modulate("ffffff")
-	elif buffed == 2:
-		get_node("water_ball")._animate("shrink")
-	elif buffed == 3:
-		get_node("wind_walk")._animate("shrink")
-		SPEED = 100
-	elif buffed == 4:
-		get_node("earth_armor")._animate("shrink")
-		damage_score = 1
-		SPEED = 100
-	buffed = 0
-	buff_timer = 0.5
-
-func _projectile():
-	var projectile
-	if state == 1 and mana_fire >= fire_cost.x: #FIRE
-		projectile = load("res://scenes/fireball.tscn").instance()
-		get_node("anchor/Position2D/AnimationPlayer").play("fire")
-		mana_fire -= fire_cost.x
-		get_node("/root/world").add_child(projectile)
-	elif state == 2 and mana_water >= water_cost.x: #WATER
-		projectile = load("res://scenes/icicle.tscn").instance()
-		get_node("anchor/Position2D/AnimationPlayer").play("water")
-		mana_water -= water_cost.x
-		get_node("/root/world").add_child(projectile)
-	elif state == 3 and mana_wind >= wind_cost.x: #WIND
-		projectile = load("res://scenes/wind_slash.tscn").instance()
-		mana_wind -= wind_cost.x
-		get_node("/root/world").add_child(projectile)
-	elif state == 4 and mana_earth >= earth_cost.x: #EARTH
-		projectile = load("res://scenes/rock.tscn").instance()
-		mana_earth -= earth_cost.x
-		get_node("/root/world").add_child(projectile)
-
-func _AOE():
-	if AOE_timer <= 0:
-		var AOE
-		if state == 1 and mana_fire >= fire_cost.y: #FIRE
-			AOE = load("res://scenes/flame_wheel.tscn").instance()
-			mana_fire -= fire_cost.y
-			get_node("/root/world").add_child(AOE)
-		elif state == 2 and mana_water >= water_cost.y: #WATER
-			AOE = load("res://scenes/frost_field.tscn").instance()
-			get_node("anchor/Position2D/AnimationPlayer").play("water")
-			mana_water -= water_cost.y
-			get_node("/root/world").add_child(AOE)
-		elif state == 3 and mana_wind >= wind_cost.y: #WIND
-			AOE = load("res://scenes/whirlwind.tscn").instance()
-			mana_wind -= wind_cost.y
-			get_node("/root/world").add_child(AOE)
-		elif state == 4 and mana_earth >= earth_cost.y: #EARTH
-			AOE = load("res://scenes/desert.tscn").instance()
-			mana_earth -= earth_cost.y
-			get_node("/root/world").add_child(AOE)
-		AOE_timer = 2
-
-func _mana_up(state,ammount):
+func _on_fire_pressed():
 	if state == 1:
-		mana_fire += ammount
-	elif state == 2:
-		mana_water += ammount
-	elif state == 3:
-		mana_wind += ammount
-	elif state == 4:
-		mana_earth += ammount
+		btn_timer_state = true
+	else:
+		fire.set_opacity(1)
+		water.set_opacity(op_lvl)
+		wind.set_opacity(op_lvl)
+		earth.set_opacity(op_lvl)
+		player._change_state(1)
+		state = 1
 
-func _death():
+func _on_water_pressed():
+	if state == 2:
+		btn_timer_state = true
+	else:
+		fire.set_opacity(op_lvl)
+		water.set_opacity(1)
+		wind.set_opacity(op_lvl)
+		earth.set_opacity(op_lvl)
+		player._change_state(2)
+		state = 2
+
+func _on_wind_pressed():
+	if state == 3:
+		btn_timer_state = true
+	else:
+		fire.set_opacity(op_lvl)
+		water.set_opacity(op_lvl)
+		wind.set_opacity(1)
+		earth.set_opacity(op_lvl)
+		player._change_state(3)
+		state = 3
+
+func _on_earth_pressed():
+	if state == 4:
+		btn_timer_state = true
+	else:
+		fire.set_opacity(op_lvl)
+		water.set_opacity(op_lvl)
+		wind.set_opacity(op_lvl)
+		earth.set_opacity(1)
+		player._change_state(4)
+		state = 4
+
+func _release():
+	if btn_timer > 0:
+		if btn_timer < 0.3:
+			player._projectile()
+		elif btn_timer >= 0.3:
+			player._AOE()
+		btn_timer_state = false
+
+func _on_fire_released():
+		_release()
+func _on_water_released():
+		_release()
+func _on_wind_released():
+		_release()
+func _on_earth_released():
+		_release()
+
+func _fire_update(mana):
+	fire_value = clamp(mana, 0, max_value)
+func _water_update(mana):
+	water_value = clamp(mana, 0, max_value)
+func _wind_update(mana):
+	wind_value = clamp(mana, 0, max_value)
+func _earth_update(mana):
+	earth_value = clamp(mana, 0, max_value)
+
+func _death_update():
+	get_node("../death_screen")._update(score_count, kill_count, timer, minuite)
 	set_fixed_process(false)
-	set_process_input(false)
-	_animate("death")
+
+func _update(num):
+	score_count += num
+	kill_count += 1
+
+func _health_check(health):
+	get_node("counters/health_v/health").set_value(health)
+
+func _start():
+	fire.set_opacity(1)
+	water.set_opacity(op_lvl)
+	wind.set_opacity(op_lvl)
+	earth.set_opacity(op_lvl)
+	set_fixed_process(true)
+
+func _reset():
+	score_count = 0
+	kill_count = 0
+	timer = 0
+	minuite = 0
 
 func _fixed_process(delta):
-#SIGNALS
-	emit_signal("mana_fire", mana_fire)
-	emit_signal("mana_water", mana_water)
-	emit_signal("mana_wind", mana_wind)
-	emit_signal("mana_earth", mana_earth)
-#UPDATE HEALTH
-	get_node("/root/world/HUD/GUI")._health_check(health)
-#BASIC MOTION LAWS
-	var motion = velocity * delta
-	motion = move(motion)
-#MOVE
-	var mouse_pos = get_global_mouse_pos()
-	var pos_dif = mouse_pos - get_global_pos()
-	var angle = atan2(pos_dif.y,pos_dif.x)
-	if (abs(pos_dif.x) > 10 or abs(pos_dif.y) > 10):
-		velocity.x = cos(angle) * SPEED
-		velocity.y = sin(angle) * SPEED
-		get_node("anchor").set_rot(-angle)
+	score.set_text(str(score_count))
+	kills.set_text(str(kill_count))
+	time.set_text(str("%d" % minuite).pad_zeros(2) + ":" + str("%d" % timer).pad_zeros(2))
+#TIMER
+	if get_opacity() == 1:
+		timer += delta
+		if timer >= 60:
+			minuite += 1
+			timer = 0
+#BTN_TIMER
+	if btn_timer_state:
+		btn_timer += delta
 	else:
-		velocity.x = lerp(velocity.x,0,ACCEL)
-		velocity.y = lerp(velocity.y,0,ACCEL)
-#POSITION W/ ELEMENTS
-	if state == 1:
-		get_node("anchor/Position2D").set_pos(Vector2(25,0))
-	elif state == 2:
-		get_node("anchor/Position2D").set_pos(Vector2(30,0))
-	elif state == 3:
-		get_node("anchor/Position2D").set_pos(Vector2(10,0))
-	elif state == 4:
-		get_node("anchor/Position2D").set_pos(Vector2(40,0))
-#BUFF COSTS
-	if buffed == 1:
-		mana_fire -= fire_cost.z
-		if mana_fire < fire_cost.z:
-			_buff_end()
-	elif buffed == 2:
-		mana_water -= water_cost.z
-		if mana_water < water_cost.z:
-			_buff_end()
-	elif buffed == 3:
-		mana_wind -= wind_cost.z
-		if mana_wind < wind_cost.z:
-			_buff_end()
-	elif buffed == 4:
-		mana_earth -= earth_cost.z
-		if mana_earth < earth_cost.z:
-			_buff_end()
-#COOLDOWN
-	if AOE_timer >= 0:
-		AOE_timer -= delta
-	if buff_timer >= 0:
-		buff_timer -= delta
-#MAX MANA
-	if mana_fire > max_mana:
-		mana_fire = max_mana
-	if mana_water > max_mana:
-		mana_water = max_mana
-	if mana_wind > max_mana:
-		mana_wind = max_mana
-	if mana_earth > max_mana:
-		mana_earth = max_mana
-#ANGLE ANIMS
-	if angle > -7*PI/8 and angle <= -5*PI/8:
-		get_node("Sprite").set_frame(3)
-	elif angle > -5*PI/8 and angle <= -3*PI/8:
-		get_node("Sprite").set_frame(4)
-	elif angle > -3*PI/8 and angle <= -PI/8:
-		get_node("Sprite").set_frame(3)
-	elif angle > -PI/8 and angle <= PI/8:
-		get_node("Sprite").set_frame(2)
-	elif angle > PI/8 and angle <= 3*PI/8:
-		get_node("Sprite").set_frame(1)
-	elif angle > 3*PI/8 and angle <= 5*PI/8:
-		get_node("Sprite").set_frame(0)
-	elif angle > 5*PI/8 and angle <= 7*PI/8:
-		get_node("Sprite").set_frame(1)
-	else:
-		get_node("Sprite").set_frame(2)
+		btn_timer = 0
+#POSITION NODES
+	get_node("elements").set_global_pos(Vector2(window.x,window.y/2))
+	get_node("mover_pos").set_global_pos(Vector2(0,window.y))
 
-	if angle > -PI/2 and angle <= PI/2:
-		get_node("Sprite").set_flip_h(true)
-	else:
-		get_node("Sprite").set_flip_h(false)
-#DEATH
-	if health <= 0:
-		if buffed != 0:
-			_buff_end()
-		_death()
+#CHANGING MANA BAR
+	fire_percent = float(fire_value / max_value)
+	fire_mana.set_scale(Vector2(1, -fire_percent))
+	water_percent = float(water_value / max_value)
+	water_mana.set_scale(Vector2(1, -water_percent))
+	wind_percent = float(wind_value / max_value)
+	wind_mana.set_scale(Vector2(1, -wind_percent))
+	earth_percent = float(earth_value / max_value)
+	earth_mana.set_scale(Vector2(1, -earth_percent))
 
 func _ready():
-	set_fixed_process(true)
-	set_process_input(true)
-	get_node("/root/world/HUD/GUI/mover_pos/mover").connect("angle", self, "_move")
+	player.connect("mana_fire", self, "_fire_update")
+	player.connect("mana_water", self, "_water_update")
+	player.connect("mana_wind", self, "_wind_update")
+	player.connect("mana_earth", self, "_earth_update")
+	player.connect("death", self, "_death_update")

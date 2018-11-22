@@ -20,7 +20,7 @@ var stun_timer = 0
 var frozen = false
 var dead = false
 #attributes
-var attack_power = 5
+var attack_power = 10
 
 signal health
 
@@ -31,14 +31,15 @@ func _take_damage(damage):
 	health -= damage * damage_mult
 
 func _stun():
-	attack_timer = 0.8
+	attack_timer = 1.5
 	stun_timer = 0.4
 
-func _on_attack_body_enter( body ):
-	if body == player:
-		body._take_damage(attack_power)
-		attack_timer = 0.8
-		get_node("anchor/Position2D/AnimationPlayer").play("attack")
+func _attack():
+	var projectile
+	projectile = load("res://scenes/god_magic.tscn").instance()
+	projectile.set_global_pos(get_node("anchor/Position2D").get_global_pos())
+	get_node("/root/world").add_child(projectile)
+	attack_timer = 2.5
 
 func _freeze(perc, time):
 	if perc == 0:
@@ -63,9 +64,8 @@ func _mana_spawn(ammount):
 func _death():
 	var drop_rng = randi()%4+1
 	_mana_spawn(drop_rng * attack_power/5)
-	get_node("/root/world/HUD/GUI")._update(50)
+	get_node("/root/world/HUD/GUI")._update(120)
 	get_parent().set_opacity(0)
-	get_node("attack").set_enable_monitoring(false)
 	get_node("CollisionShape2D").queue_free()
 	remove_from_group("enemy")
 	dead = true
@@ -87,7 +87,7 @@ func _fixed_process(delta):
 		var player_pos = player.get_global_pos()
 		var pos_dif = player_pos - get_global_pos()
 		var angle = atan2(pos_dif.y,pos_dif.x)
-		if (abs(pos_dif.x) > 50 or abs(pos_dif.y) > 50) and stun_timer <= 0:
+		if (abs(pos_dif.x) > 150 or abs(pos_dif.y) > 150) and stun_timer <= 0:
 			velocity.x = cos(angle) * SPEED
 			velocity.y = sin(angle) * SPEED
 			get_node("anchor").set_rot(-angle)
@@ -95,13 +95,10 @@ func _fixed_process(delta):
 			velocity.x = lerp(velocity.x,0,ACCEL)
 			velocity.y = lerp(velocity.y,0,ACCEL)
 #ATTACK
-		get_node("attack").set_global_pos(get_node("anchor/Position2D").get_global_pos())
 		if attack_timer >= 0:
 			attack_timer -= delta
-		if attack_timer > 0:
-			get_node("attack").set_enable_monitoring(false)
-		else:
-			get_node("attack").set_enable_monitoring(true)
+		if attack_timer <= 0 and (abs(pos_dif.x) < 250 or abs(pos_dif.y) < 250) and stun_timer <= 0:
+			_attack()
 #FREEZE
 		freeze_timer -= delta
 		if freeze_timer <= 0:
@@ -119,7 +116,7 @@ func _fixed_process(delta):
 #ANGLE ANIMS
 		if stun_timer <= 0:
 			if angle > -7*PI/8 and angle <= -5*PI/8:
-				get_node("Sprite").set_frame(5)
+				get_node("Sprite").set_frame(3)
 			elif angle > -5*PI/8 and angle <= -3*PI/8:
 				get_node("Sprite").set_frame(4)
 			elif angle > -3*PI/8 and angle <= -PI/8:
@@ -130,13 +127,15 @@ func _fixed_process(delta):
 				get_node("Sprite").set_frame(1)
 			elif angle > 3*PI/8 and angle <= 5*PI/8:
 				get_node("Sprite").set_frame(0)
-			elif angle > 3*PI/8 and angle <= PI/2:
-				get_node("Sprite").set_frame(8)
 			elif angle > 5*PI/8 and angle <= 7*PI/8:
-				get_node("Sprite").set_frame(7)
+				get_node("Sprite").set_frame(1)
 			else:
-				get_node("Sprite").set_frame(6)
-
+				get_node("Sprite").set_frame(2)
+	
+			if angle > -PI/2 and angle <= PI/2:
+				get_node("Sprite").set_flip_h(false)
+			else:
+				get_node("Sprite").set_flip_h(true)
 #DEATH
 	if health <= 0:
 		if dead == false:
@@ -147,6 +146,6 @@ func _fixed_process(delta):
 
 func _ready():
 	set_fixed_process(true)
-	SPEED = rand_range(20,70)
+	SPEED = rand_range(50,90)
 	speed_val = SPEED
 	player.connect("damage_mult", self, "_update")

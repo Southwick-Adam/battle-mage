@@ -1,5 +1,6 @@
 extends Node2D
 
+onready var player = get_node("/root/world/player/KinematicBody2D")
 var mana_timer = 2
 var vortex_timer = 10
 
@@ -17,15 +18,16 @@ func _spawn(item):
 	else:
 		x_neg = 1
 	if item == ("mana"):
-		var location = randf() * 1000
+		var location = randf() * 950
 		var mana = load("res://scenes/mana.tscn").instance()
 		get_node("/root/world").add_child(mana)
 		mana.set_global_pos(Vector2(location * x_neg, location * y_neg))
-	elif item == ("vortex"):
-		var location = randf() * 1000
-		var vortex = load("res://scenes/vortex.tscn").instance()
-		get_node("/root/world").add_child(vortex)
-		vortex.set_global_pos(Vector2(location * x_neg, location * y_neg))
+
+func _start():
+	set_fixed_process(true)
+
+func _stop():
+	set_fixed_process(false)
 
 func _fixed_process(delta):
 	mana_timer -= delta
@@ -38,4 +40,4 @@ func _fixed_process(delta):
 		vortex_timer = 60 + (randf() * 30)
 
 func _ready():
-	set_fixed_process(true)
+	player.connect("death", self, "_stop")

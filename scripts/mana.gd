@@ -15,6 +15,9 @@ func _on_Area2D_body_enter( body ):
 		body._mana_up(state,(ammount * 3))
 		queue_free()
 
+func _stop():
+	queue_free()
+
 func _fixed_process(delta):
 	timer -= delta
 	if timer > 0:
@@ -25,6 +28,7 @@ func _fixed_process(delta):
 
 func _ready():
 	set_fixed_process(true)
+	player.connect("death", self, "_stop")
 #MANA TYPE
 	var rng = randf()
 	var tex

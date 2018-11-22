@@ -34,7 +34,9 @@ tracks/1/keys = {
 "values": [ 0.0, 111111.0 ]
 }
 
-[node name="flame_wheel" type="Node2D"]
+[node name="flame_wheel" type="Node2D" groups=[
+"AOE",
+]]
 
 [node name="Area2D" type="Area2D" parent="."]
 

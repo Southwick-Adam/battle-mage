@@ -103,7 +103,9 @@ tracks/3/keys = {
 "values": [ 20.0, 47.0, 73.0, 100.0, 127.0, 153.0, 180.0 ]
 }
 
-[node name="frost_field" type="Node2D"]
+[node name="frost_field" type="Node2D" groups=[
+"AOE",
+]]
 
 [node name="KinematicBody2D" type="KinematicBody2D" parent="."]
 

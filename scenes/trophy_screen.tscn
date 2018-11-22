@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=1]
+[gd_scene load_steps=9 format=1]
 
-[ext_resource path="res://scripts/death_screen.gd" type="Script" id=1]
-[ext_resource path="res://assets/UI assets/blue_panel.png" type="Texture" id=2]
+[ext_resource path="res://scripts/tropy_screen.gd" type="Script" id=1]
+[ext_resource path="res://assets/UI assets/white_panel.png" type="Texture" id=2]
 [ext_resource path="res://assets/UI assets/Xerox Sans Serif Narrow Bold Oblique.ttf" type="DynamicFontData" id=3]
-[ext_resource path="res://assets/UI assets/blue_button09 (1).png" type="Texture" id=4]
-[ext_resource path="res://assets/UI assets/icons_128x128.png" type="Texture" id=5]
+[ext_resource path="res://assets/UI assets/medals.png" type="Texture" id=4]
+[ext_resource path="res://assets/UI assets/white_button.png" type="Texture" id=5]
+[ext_resource path="res://assets/UI assets/icons_128x128.png" type="Texture" id=6]
 
 [sub_resource type="DynamicFont" id=1]
 
@@ -20,7 +21,7 @@ font/use_mipmaps = true
 font/use_filter = true
 font/font = ExtResource( 3 )
 
-[node name="death_screen" type="Control"]
+[node name="trophy_screen" type="Control"]
 
 focus/ignore_mouse = false
 focus/stop_mouse = true
@@ -57,6 +58,7 @@ margin/top = 0.0
 margin/right = 650.0
 margin/bottom = 450.0
 texture = ExtResource( 2 )
+modulate = Color( 0.910156, 0.497742, 0.497742, 1 )
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Patch9Frame"]
 
@@ -66,9 +68,9 @@ focus/ignore_mouse = false
 focus/stop_mouse = false
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 40.0
+margin/left = 20.0
 margin/top = 20.0
-margin/right = 40.0
+margin/right = 20.0
 margin/bottom = 20.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Patch9Frame/MarginContainer"]
@@ -79,21 +81,21 @@ size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 8.0
 margin/top = 0.0
-margin/right = 562.0
+margin/right = 602.0
 margin/bottom = 410.0
 alignment = 0
 
 [node name="title" type="HBoxContainer" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer"]
 
-editor/display_folded = true
+rect/min_size = Vector2( 0, 110 )
 focus/ignore_mouse = false
 focus/stop_mouse = false
 size_flags/horizontal = 2
-size_flags/vertical = 3
+size_flags/vertical = 2
 margin/left = 0.0
 margin/top = 0.0
-margin/right = 554.0
-margin/bottom = 134.0
+margin/right = 594.0
+margin/bottom = 110.0
 alignment = 1
 
 [node name="Label" type="Label" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/title"]
@@ -102,31 +104,31 @@ focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-margin/left = 130.0
-margin/top = 38.0
-margin/right = 423.0
-margin/bottom = 96.0
+margin/left = 218.0
+margin/top = 26.0
+margin/right = 375.0
+margin/bottom = 84.0
 custom_fonts/font = SubResource( 1 )
-text = "GAME OVER"
+text = "STATS"
 align = 1
 valign = 2
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="scores" type="HBoxContainer" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer"]
+[node name="stats" type="HBoxContainer" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer"]
 
 focus/ignore_mouse = false
 focus/stop_mouse = false
 size_flags/horizontal = 2
-size_flags/vertical = 3
+size_flags/vertical = 2
 margin/left = 0.0
-margin/top = 138.0
-margin/right = 554.0
-margin/bottom = 272.0
-alignment = 0
+margin/top = 114.0
+margin/right = 594.0
+margin/bottom = 212.0
+alignment = 1
 
-[node name="kills" type="VBoxContainer" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/scores"]
+[node name="kills" type="VBoxContainer" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/stats"]
 
 focus/ignore_mouse = false
 focus/stop_mouse = false
@@ -134,204 +136,231 @@ size_flags/horizontal = 3
 size_flags/vertical = 2
 margin/left = 0.0
 margin/top = 0.0
-margin/right = 182.0
-margin/bottom = 134.0
+margin/right = 195.0
+margin/bottom = 98.0
 alignment = 1
 
-[node name="text" type="HBoxContainer" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/scores/kills"]
+[node name="text" type="HBoxContainer" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/stats/kills"]
 
 editor/display_folded = true
+rect/min_size = Vector2( 0, 50 )
 focus/ignore_mouse = false
 focus/stop_mouse = false
 size_flags/horizontal = 2
-size_flags/vertical = 3
+size_flags/vertical = 2
 margin/left = 0.0
 margin/top = 0.0
-margin/right = 182.0
-margin/bottom = 65.0
+margin/right = 195.0
+margin/bottom = 50.0
 alignment = 1
 
-[node name="Label" type="Label" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/scores/kills/text"]
+[node name="Label" type="Label" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/stats/kills/text"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-margin/left = 53.0
-margin/top = 10.0
-margin/right = 129.0
-margin/bottom = 54.0
+margin/left = 59.0
+margin/top = 3.0
+margin/right = 135.0
+margin/bottom = 47.0
 custom_fonts/font = SubResource( 2 )
 text = "Kills"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="num" type="HBoxContainer" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/scores/kills"]
+[node name="best" type="HBoxContainer" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/stats/kills"]
 
 focus/ignore_mouse = false
 focus/stop_mouse = false
 size_flags/horizontal = 2
 size_flags/vertical = 3
 margin/left = 0.0
-margin/top = 69.0
-margin/right = 182.0
-margin/bottom = 134.0
+margin/top = 54.0
+margin/right = 195.0
+margin/bottom = 98.0
 alignment = 1
 
-[node name="Label" type="Label" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/scores/kills/num"]
+[node name="Label" type="Label" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/stats/kills/best"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-margin/left = 71.0
-margin/top = 10.0
-margin/right = 111.0
-margin/bottom = 54.0
+margin/left = 77.0
+margin/top = 0.0
+margin/right = 117.0
+margin/bottom = 44.0
 custom_fonts/font = SubResource( 2 )
 text = "14"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="score" type="VBoxContainer" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/scores"]
+[node name="Sprite" type="Sprite" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/stats/kills/best"]
+
+transform/pos = Vector2( 103, 90 )
+texture = ExtResource( 4 )
+vframes = 2
+hframes = 3
+
+[node name="score" type="VBoxContainer" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/stats"]
 
 editor/display_folded = true
 focus/ignore_mouse = false
 focus/stop_mouse = false
 size_flags/horizontal = 3
 size_flags/vertical = 2
-margin/left = 186.0
+margin/left = 199.0
 margin/top = 0.0
-margin/right = 368.0
-margin/bottom = 134.0
+margin/right = 394.0
+margin/bottom = 98.0
 alignment = 1
 
-[node name="text" type="HBoxContainer" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/scores/score"]
+[node name="text" type="HBoxContainer" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/stats/score"]
 
+editor/display_folded = true
+rect/min_size = Vector2( 0, 50 )
 focus/ignore_mouse = false
 focus/stop_mouse = false
 size_flags/horizontal = 2
-size_flags/vertical = 3
+size_flags/vertical = 2
 margin/left = 0.0
 margin/top = 0.0
-margin/right = 182.0
-margin/bottom = 65.0
+margin/right = 195.0
+margin/bottom = 50.0
 alignment = 1
 
-[node name="Label" type="Label" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/scores/score/text"]
+[node name="Label" type="Label" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/stats/score/text"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-margin/left = 41.0
-margin/top = 10.0
-margin/right = 141.0
-margin/bottom = 54.0
+margin/left = 47.0
+margin/top = 3.0
+margin/right = 147.0
+margin/bottom = 47.0
 custom_fonts/font = SubResource( 2 )
 text = "Score"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="num" type="HBoxContainer" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/scores/score"]
+[node name="best" type="HBoxContainer" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/stats/score"]
 
 focus/ignore_mouse = false
 focus/stop_mouse = false
 size_flags/horizontal = 2
 size_flags/vertical = 3
 margin/left = 0.0
-margin/top = 69.0
-margin/right = 182.0
-margin/bottom = 134.0
+margin/top = 54.0
+margin/right = 195.0
+margin/bottom = 98.0
 alignment = 1
 
-[node name="Label" type="Label" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/scores/score/num"]
+[node name="Label" type="Label" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/stats/score/best"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-margin/left = 51.0
-margin/top = 10.0
-margin/right = 131.0
-margin/bottom = 54.0
+margin/left = 57.0
+margin/top = 0.0
+margin/right = 137.0
+margin/bottom = 44.0
 custom_fonts/font = SubResource( 2 )
 text = "1200"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="time" type="VBoxContainer" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/scores"]
+[node name="Sprite" type="Sprite" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/stats/score/best"]
+
+transform/pos = Vector2( 103, 90 )
+texture = ExtResource( 4 )
+vframes = 2
+hframes = 3
+
+[node name="time" type="VBoxContainer" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/stats"]
 
 editor/display_folded = true
 focus/ignore_mouse = false
 focus/stop_mouse = false
 size_flags/horizontal = 3
 size_flags/vertical = 2
-margin/left = 372.0
+margin/left = 398.0
 margin/top = 0.0
-margin/right = 554.0
-margin/bottom = 134.0
+margin/right = 594.0
+margin/bottom = 98.0
 alignment = 1
 
-[node name="text" type="HBoxContainer" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/scores/time"]
+[node name="text" type="HBoxContainer" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/stats/time"]
 
+editor/display_folded = true
+rect/min_size = Vector2( 0, 50 )
 focus/ignore_mouse = false
 focus/stop_mouse = false
 size_flags/horizontal = 2
-size_flags/vertical = 3
+size_flags/vertical = 2
 margin/left = 0.0
 margin/top = 0.0
-margin/right = 182.0
-margin/bottom = 65.0
+margin/right = 196.0
+margin/bottom = 50.0
 alignment = 1
 
-[node name="Label" type="Label" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/scores/time/text"]
+[node name="Label" type="Label" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/stats/time/text"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-margin/left = 49.0
-margin/top = 10.0
-margin/right = 133.0
-margin/bottom = 54.0
+margin/left = 56.0
+margin/top = 3.0
+margin/right = 140.0
+margin/bottom = 47.0
 custom_fonts/font = SubResource( 2 )
 text = "Time"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="num" type="HBoxContainer" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/scores/time"]
+[node name="best" type="HBoxContainer" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/stats/time"]
 
 focus/ignore_mouse = false
 focus/stop_mouse = false
 size_flags/horizontal = 2
 size_flags/vertical = 3
 margin/left = 0.0
-margin/top = 69.0
-margin/right = 182.0
-margin/bottom = 134.0
+margin/top = 54.0
+margin/right = 196.0
+margin/bottom = 98.0
 alignment = 1
 
-[node name="Label" type="Label" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/scores/time/num"]
+[node name="Label" type="Label" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/stats/time/best"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-margin/left = 45.0
-margin/top = 10.0
-margin/right = 137.0
-margin/bottom = 54.0
+margin/left = 52.0
+margin/top = 0.0
+margin/right = 144.0
+margin/bottom = 44.0
 custom_fonts/font = SubResource( 2 )
 text = "12:02"
+align = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
+
+[node name="Sprite" type="Sprite" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/stats/time/best"]
+
+transform/pos = Vector2( 103, 90 )
+texture = ExtResource( 4 )
+vframes = 2
+hframes = 3
 
 [node name="buttons" type="HBoxContainer" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer"]
 
@@ -340,16 +369,17 @@ focus/stop_mouse = false
 size_flags/horizontal = 2
 size_flags/vertical = 3
 margin/left = 0.0
-margin/top = 276.0
-margin/right = 554.0
+margin/top = 216.0
+margin/right = 594.0
 margin/bottom = 410.0
 alignment = 1
 
 [node name="exit" type="TouchScreenButton" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/buttons"]
 
-transform/pos = Vector2( 350, 25 )
-transform/scale = Vector2( 0.08, 0.08 )
-normal = ExtResource( 4 )
+editor/display_folded = true
+transform/pos = Vector2( 259.723, 100.941 )
+transform/scale = Vector2( 0.37, 0.37 )
+normal = ExtResource( 5 )
 pressed = null
 bitmask = null
 shape = null
@@ -359,42 +389,23 @@ passby_press = false
 action = ""
 visibility_mode = 0
 
+[node name="Sprite" type="Sprite" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/buttons/exit"]
+
+transform/pos = Vector2( 121.581, 113.622 )
+transform/scale = Vector2( 1.01, 1.01 )
+texture = ExtResource( 5 )
+modulate = Color( 0.699219, 0.243088, 0.243088, 1 )
+
 [node name="icon" type="Sprite" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/buttons/exit"]
 
-transform/pos = Vector2( 613.422, 573.501 )
-transform/scale = Vector2( 8, 8 )
-texture = ExtResource( 5 )
+transform/pos = Vector2( 121.122, 113.5 )
+transform/scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 6 )
 vframes = 8
 hframes = 8
 frame = 36
 modulate = Color( 0.814087, 0.922443, 0.964844, 1 )
 
-[node name="TouchScreenButton" type="TouchScreenButton" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/buttons"]
-
-transform/pos = Vector2( 125, 25 )
-transform/scale = Vector2( 0.08, 0.08 )
-normal = ExtResource( 4 )
-pressed = null
-bitmask = null
-shape = null
-shape_centered = true
-shape_visible = true
-passby_press = false
-action = ""
-visibility_mode = 0
-
-[node name="icon" type="Sprite" parent="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/buttons/TouchScreenButton"]
-
-transform/pos = Vector2( 627.273, 559.651 )
-transform/scale = Vector2( 7, 7 )
-texture = ExtResource( 5 )
-vframes = 8
-hframes = 8
-frame = 23
-modulate = Color( 0.814087, 0.922443, 0.964844, 1 )
-
 [connection signal="pressed" from="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/buttons/exit" to="." method="_on_exit_pressed"]
-
-[connection signal="pressed" from="MarginContainer/Patch9Frame/MarginContainer/VBoxContainer/buttons/TouchScreenButton" to="." method="_on_TouchScreenButton_pressed"]
 
 

@@ -7,6 +7,7 @@ var velocity = Vector2()
 var health = 100
 var tex
 var angle = 0
+var stop = true
 #BUFF VALUES
 var damage_mult = 1
 var damage_score = 1
@@ -147,6 +148,9 @@ func _mana_up(state,ammount):
 func _move(ang):
 	angle = ang
 
+func _stop():
+	stop = true
+
 func _death():
 	var screen
 	screen = load("res://scenes/death_screen.tscn").instance()
@@ -155,6 +159,19 @@ func _death():
 	set_fixed_process(false)
 	set_process_input(false)
 	_animate("death")
+
+func _start():
+	set_fixed_process(true)
+	set_process_input(true)
+
+func _reset():
+	set_pos(Vector2(500,300))
+	health = 100
+	mana_fire = 100
+	mana_earth = 100
+	mana_wind = 100
+	mana_water = 100
+	_animate("idle")
 
 func _fixed_process(delta):
 #SIGNALS
@@ -167,12 +184,14 @@ func _fixed_process(delta):
 #BASIC MOTION LAWS
 	var motion = velocity * delta
 	motion = move(motion)
-	velocity.x = -cos(angle) * SPEED
-	velocity.y = -sin(angle) * SPEED
-	get_node("anchor").set_rot(-angle + PI)
-	#else:
-	#	velocity.x = lerp(velocity.x,0,ACCEL)
-	#	velocity.y = lerp(velocity.y,0,ACCEL)
+	if stop == false:
+		velocity.x = -cos(angle) * SPEED
+		velocity.y = -sin(angle) * SPEED
+		get_node("anchor").set_rot(-angle + PI)
+	else:
+		velocity.x = lerp(velocity.x,0,ACCEL)
+		velocity.y = lerp(velocity.y,0,ACCEL)
+	stop = false
 #POSITION W/ ELEMENTS
 	if state == 1:
 		get_node("anchor/Position2D").set_pos(Vector2(25,0))
@@ -247,6 +266,5 @@ func _fixed_process(delta):
 		_death()
 
 func _ready():
-	set_fixed_process(true)
-	set_process_input(true)
+	get_node("/root/world/HUD/GUI/mover_pos/mover").connect("stop", self, "_stop")
 	get_node("/root/world/HUD/GUI/mover_pos/mover").connect("angle", self, "_move")

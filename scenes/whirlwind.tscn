@@ -35,7 +35,9 @@ tracks/1/keys = {
 "values": [ 0.0, 2.22222e+06 ]
 }
 
-[node name="whirlwind" type="Node2D"]
+[node name="whirlwind" type="Node2D" groups=[
+"AOE",
+]]
 
 [node name="KinematicBody2D" type="KinematicBody2D" parent="."]
 

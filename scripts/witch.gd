@@ -67,6 +67,7 @@ func _death():
 	get_node("/root/world/HUD/GUI")._update(70)
 	get_parent().set_opacity(0)
 	get_node("CollisionShape2D").queue_free()
+	remove_from_group("enemy")
 	dead = true
 
 func _fixed_process(delta):

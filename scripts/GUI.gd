@@ -1,8 +1,5 @@
 extends Control
 
-signal score_sig
-signal kills_sig
-
 var op_lvl = 0.4
 
 onready var fire = get_node("elements/fire")
@@ -10,9 +7,13 @@ onready var water = get_node("elements/water")
 onready var wind = get_node("elements/wind")
 onready var earth = get_node("elements/earth")
 
-onready var score = get_node("counters/scores_v/scores_h/score/Label")
-onready var kills = get_node("counters/scores_v/scores_h/kills/Label")
-onready var time = get_node("counters/scores_v/scores_h/time/Label")
+#onready var score = get_node("counters/scores_v/scores_h/score/Label")
+#onready var kills = get_node("counters/scores_v/scores_h/kills/Label")
+#onready var time = get_node("counters/scores_v/scores_h/time/Label")
+
+onready var score = get_node("counters/score/Label")
+onready var kills = get_node("counters/kills/Label")
+onready var time = get_node("counters/time/Label")
 
 onready var fire_mana = get_node("elements/fire/color")
 onready var water_mana = get_node("elements/water/color")
@@ -41,6 +42,8 @@ var minuite = 0
 var state = 1
 var btn_timer_state = false
 var btn_timer = 0
+var AOE_able = true
+var charge
 
 func _on_fire_pressed():
 	if state == 1:
@@ -88,11 +91,10 @@ func _on_earth_pressed():
 
 func _release():
 	if btn_timer > 0:
-		if btn_timer < 0.3:
+		if btn_timer <= 0.3:
 			player._projectile()
-		elif btn_timer >= 0.3:
-			player._AOE()
 		btn_timer_state = false
+		AOE_able = true
 
 func _on_fire_released():
 		_release()
@@ -113,7 +115,6 @@ func _earth_update(mana):
 	earth_value = clamp(mana, 0, max_value)
 
 func _death_update():
-	print("TEST")
 	get_node("../death_screen")._update(score_count, kill_count, timer, minuite)
 	set_fixed_process(false)
 
@@ -122,15 +123,25 @@ func _update(num):
 	kill_count += 1
 
 func _health_check(health):
-	get_node("counters/health_v/health").set_value(health)
+	get_node("counters/health").set_value(health)
+
+func _start():
+	fire.set_opacity(1)
+	water.set_opacity(op_lvl)
+	wind.set_opacity(op_lvl)
+	earth.set_opacity(op_lvl)
+	set_fixed_process(true)
+
+func _reset():
+	score_count = 0
+	kill_count = 0
+	timer = 0
+	minuite = 0
 
 func _fixed_process(delta):
 	score.set_text(str(score_count))
 	kills.set_text(str(kill_count))
 	time.set_text(str("%d" % minuite).pad_zeros(2) + ":" + str("%d" % timer).pad_zeros(2))
-#SIGNALS
-	emit_signal("score_sig", score_count)
-	emit_signal("kills_sig", kill_count)
 #TIMER
 	timer += delta
 	if timer >= 60:
@@ -154,13 +165,25 @@ func _fixed_process(delta):
 	wind_mana.set_scale(Vector2(1, -wind_percent))
 	earth_percent = float(earth_value / max_value)
 	earth_mana.set_scale(Vector2(1, -earth_percent))
+	#AOE
+	if btn_timer > 0.3 and AOE_able:
+		player._AOE()
+		AOE_able = false
+#CHARGE
+	if state == 1:
+		charge = get_node("elements/fire/charge")
+	elif state == 2:
+		charge = get_node("elements/water/charge")
+	elif state == 3:
+		charge = get_node("elements/wind/charge")
+	elif state == 4:
+		charge = get_node("elements/earth/charge")
+	if btn_timer > 0.05 and btn_timer < 0.3 and AOE_able:
+		charge.set_opacity(charge.get_opacity() + 0.05)
+	else:
+		charge.set_opacity(0)
 
 func _ready():
-	fire.set_opacity(1)
-	water.set_opacity(op_lvl)
-	wind.set_opacity(op_lvl)
-	earth.set_opacity(op_lvl)
-	set_fixed_process(true)
 	player.connect("mana_fire", self, "_fire_update")
 	player.connect("mana_water", self, "_water_update")
 	player.connect("mana_wind", self, "_wind_update")

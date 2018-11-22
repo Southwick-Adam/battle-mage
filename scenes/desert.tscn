@@ -25,7 +25,9 @@ points = Vector2Array( 14.5587, -245.463, 26.2501, -268.846, 46.2922, -252.144, 
 custom_solver_bias = 0.0
 points = Vector2Array( 14.5587, -245.463, -18.845, -252.144, -7.15369, -268.846 )
 
-[node name="desert" type="Node2D"]
+[node name="desert" type="Node2D" groups=[
+"AOE",
+]]
 
 script/script = ExtResource( 1 )
 
